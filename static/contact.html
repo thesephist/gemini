@@ -26,7 +26,39 @@
     <h1 class="vprop">
       <em>Contact</em> Studybuddy.
     </h1>
-    <p>Contact linuslee [at] ocf.berkeley.edu</p>
+    <div class="inputGroup required">
+      <label for="user_name">
+        <h2>What's your name?</h2>
+      </label>
+      <input type="text" name="user_name">
+    </div>
+    <div class="inputGroup required">
+      <label for="user_email">
+        <h2>What's your email address?</h2>
+      </label>
+      <input type="email" name="user_email">
+    </div>
+    <div class="inputGroup">
+      <label for="user_type">
+        <h2>What do you do?</h2>
+      </label>
+      <select name="user_type" id="user_type">
+        <option value="" selected>-- Choose one --</option>
+        <option value="berkeley_student">Berkeley Student</option>
+        <option value="student">Non-Berkeley Student</option>
+        <option value="course_staff">Course staff</option>
+        <option value="other">None of these</option>
+      </select>
+    </div>
+    <div class="inputGroup required">
+      <label for="user_content">
+        <h2>What do you want to say?</h2>
+      </label>
+      <textarea name="user_content"></textarea>
+    </div>
+    <div class="inputGroup">
+      <button class="sendButton">Send</button>
+    </div>
   </main>
   <footer>
     Studybuddy is built with ️❤️ and ☕️ at UC Berkeley.

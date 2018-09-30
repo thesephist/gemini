@@ -19,7 +19,8 @@ heade,
 main,
 footer,
 input,
-select {
+select,
+textarea {
     box-sizing: border-box;
 }
 
@@ -133,7 +134,8 @@ h1 em {
 }
 
 input,
-select {
+select,
+textarea {
     background: var(--sb-light-purple);
     padding: 8px 12px;
 }
@@ -148,6 +150,7 @@ button {
 
 input,
 select,
+textarea,
 button {
     display: block;
     border: 0;
@@ -190,6 +193,11 @@ p {
 
 p a {
     color: var(--sb-dark-purple);
+}
+
+textarea {
+    resize: none;
+    height: unset;
 }
 
 @media (max-width: 600px) {
