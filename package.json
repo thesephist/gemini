@@ -7,7 +7,7 @@
   "author": "Linus Lee <linus@thesephist.com>",
   "license": "MIT",
   "scripts": {
-    "deploy": "surge --domain studybuddycal.surge.sh -p ./"
+    "deploy": "surge --domain studybuddycal.surge.sh -p ./static/"
   },
   "devDependencies": {
     "surge": "^0.20.1"
