@@ -89,7 +89,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const emailMatch = window.location.search.match(/\?email=(.+@.+)/);
         if (emailMatch) {
             const email = emailMatch[1];
-            document.querySelector('[name=user_email').value = email;
+            document.querySelector('[name=user_email]').value = email;
         }
 
         const notEmpty = data => data.toString().trim() !== '';
