@@ -1,0 +1,15 @@
+{
+  "name": "gemini",
+  "version": "1.0.0",
+  "description": "Studybuddy prototype application",
+  "main": "src/main.js",
+  "repository": "git@github.com:thesephist/gemini.git",
+  "author": "Linus Lee <linus@thesephist.com>",
+  "license": "MIT",
+  "scripts": {
+    "deploy": "surge --domain studybuddycal.surge.sh -p ./"
+  },
+  "devDependencies": {
+    "surge": "^0.20.1"
+  }
+}
