@@ -88,11 +88,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (signupButton) {
         const signupInput = document.querySelector('.signupEmail');
-        signupButton.addEventListener('click', () => {
+        signupButton.addEventListener('click', async () => {
             const email = signupInput.value;
             if (validateBerkeleyEmail(email)) {
+                await analytics('Landing page', 'submit', 'Berkeley email');
                 window.location.href = `/signup?email=${email}`;
             } else {
+                analytics('Landing page', 'submit', 'non-Berkeley email');
                 alert('That doesn\'t look like a valid berkeley.edu email. Please check again!');
             }
         });
@@ -153,10 +155,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     parse`${'name'} (${'email'})`,
                     parse`${'class'}: ${'level'}`,
                     parse`${'topic'}, AVAIL ${'avail'}`
-                ).then(() => {
+                ).then(async () => {
+                    await analytics('Signup page', 'submit', 'form');
                     alert(parse`Thanks ${'name'}! We'll get back to you in the next few days with your group!`);
                     window.location.href = '/';
                 }).catch(e => {
+                    analytics('Signup page', 'error');
                     alert(`Looks like there was an error signing up. Would you try again?\nError: ${e}`);
                 });
             }
@@ -214,6 +218,7 @@ document.addEventListener('DOMContentLoaded', () => {
                     alert(parse`Thanks for reaching out, ${'name'}! We'll get back to you in the next few days.`);
                     window.location.href = '/contact';
                 }).catch(e => {
+                    analytics('Contact page', 'erorr');
                     alert(`Looks like there was an error somewhere. Would you try again?\nError: ${e}`);
                 });
             }
