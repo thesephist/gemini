@@ -58,6 +58,23 @@ const validateInputFields = validationDict => {
     return allValid;
 }
 
+const analytics = (category, action, label, value) => {
+    return new Promise((res, rej) => {
+        let resolved = false;
+        ga('send', 'event', category, action, label, value, {
+            hitCallback: () => {
+                if (!resolved) {
+                    resolved = true;
+                    res();
+                }
+            },
+        });
+        setTimeout(() => {
+            if (!resolved) res();
+        }, 2000); // timeout if GA doesn't work for some reason
+    });
+}
+
 document.addEventListener('DOMContentLoaded', () => {
     for (const [query, phrases] of Object.entries(AB_TEST_REPLACEMENTS)) {
         if (document.querySelector(query)) {
