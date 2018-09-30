@@ -1,0 +1,178 @@
+/* RESETS */
+html,
+body,
+img,
+h1,
+h2,
+h3,
+p,
+li,
+ul {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    box-sizing: border-box;
+}
+
+div,
+heade,
+main,
+footer,
+input {
+    box-sizing: border-box;
+}
+
+h1,
+h2,
+h3 {
+    font-weight: normal;
+}
+
+/* CSS VARS */
+
+body {
+    --sb-dark-purple: #634dd5;
+    --sb-light-purple: #c2bbe8;
+    --sb-yellow: #f3c11e;
+    --sb-bg-purple: #efedf6;
+    --header-height: 80px;
+}
+
+/* APP STYLES */
+
+body {
+    font-family: 'Helvetica', sans-serif;
+    background: var(--sb-bg-purple);
+}
+
+header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: var(--header-height);
+    color: var(--sb-dark-purple);
+}
+
+header,
+footer {
+    font-size: 18px;
+    max-width: 800px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 20px;
+    color: #6c6c6c;
+}
+
+#logo {
+    height: 100%;
+    padding: 20px 0;
+}
+
+#logo img {
+    height: 100%;
+    width: 100$;
+    object-fit: fill;
+}
+
+nav {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+nav a {
+    color: var(--sb-dark-purple);
+    text-decoration: none;
+    cursor: pointer;
+    margin-left: 18px;
+}
+
+nav a:hover {
+    text-decoration: underline;
+}
+
+main {
+    margin: auto;
+    margin-top: var(--header-height);
+    padding: 20px;
+    width: 80%;
+    max-width: 700px;
+}
+
+h1 {
+    font-weight: bold;
+    line-height: 1.4em;
+}
+
+h2 {
+    font-weight: bold;
+}
+
+.vprop {
+    font-size: 40px;
+    margin: 32px 0;
+}
+
+.question {
+    color: var(--sb-yellow);
+}
+
+.signupGroup {
+    min-width: 320px;
+    width: 20%;
+    margin: 64px 0;
+    margin-left: auto;
+}
+
+.signupEmail {
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid var(--sb-dark-purple);
+    padding: 8px 10px;
+    font-size: 20px;
+    width: 100%;
+}
+
+.signupButton {
+    display: block;
+    margin: 0 auto;
+    background: var(--sb-dark-purple);
+    color: #fff;
+    font-size: 22px;
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 50px;
+    cursor: pointer;
+    margin-top: 24px;
+    border: 0;
+    transition: opacity .2s;
+}
+
+.signupButton:hover {
+    opacity: .9;
+}
+.signupButton:hover::after {
+    transform: translateX(14px);
+}
+
+.signupButton::after {
+    content: '❯';
+    margin-left: 12px;
+    transition: transform .15s;
+    display: inline-block;
+}
+
+@media (max-width: 600px) {
+    main {
+        width: 98%;
+    }
+
+    .signupGroup {
+        width: 100%;
+    }
+}
