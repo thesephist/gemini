@@ -15,7 +15,7 @@ ul {
 }
 
 div,
-heade,
+header,
 main,
 footer,
 input,
@@ -46,10 +46,15 @@ body {
     --header-height: 80px;
 }
 
+body,
+textarea,
+input {
+    font-family: 'Helvetica', sans-serif;
+}
+
 /* APP STYLES */
 
 body {
-    font-family: 'Helvetica', sans-serif;
     background: var(--sb-bg-purple);
 }
 
@@ -198,6 +203,7 @@ p a {
 textarea {
     resize: none;
     height: unset;
+    min-height: 240px;
 }
 
 @media (max-width: 600px) {
