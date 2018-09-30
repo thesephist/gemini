@@ -13,10 +13,6 @@ const AB_TEST_REPLACEMENTS = {
     ],
 };
 
-const log = (...args) => {
-    console.log(...args);
-}
-
 const chooseRandom = (list) => {
     return list[~~(Math.random() * list.length)];
 }
@@ -79,6 +75,8 @@ document.addEventListener('DOMContentLoaded', () => {
             const email = signupInput.value;
             if (validateBerkeleyEmail(email)) {
                 window.location.href = `/signup?email=${email}`;
+            } else {
+                alert('That doesn\'t look like a valid berkeley.edu email. Please check again!');
             }
         });
     }
