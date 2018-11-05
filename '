@@ -89,12 +89,12 @@ document.addEventListener('DOMContentLoaded', () => {
         const signupInput = document.querySelector('.signupEmail');
         signupButton.addEventListener('click', async () => {
             const email = signupInput.value;
-            if (validateBerkeleyEmail(email)) {
+            if (validateEmail(email)) {
                 await analytics('Landing page', 'submit', 'Berkeley email');
                 window.location.href = `/signup?email=${email}`;
             } else {
-                await analytics('Landing page', 'submit', 'non-Berkeley email');
-                window.location.href = `/signup?email=${email}`;
+                analytics('Landing page', 'submit', 'non-Berkeley email');
+                alert('That doesn\'t look like a valid berkeley.edu email. Please check again!');
             }
         });
     }

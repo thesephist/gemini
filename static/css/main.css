@@ -80,8 +80,9 @@ footer {
     color: #6c6c6c;
 }
 
-footer {
-    margin-bottom: 40px;
+footer nav {
+    margin: 0 auto;
+    margin-bottom: 32px;
 }
 
 #logo {
@@ -126,17 +127,14 @@ main {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
+    margin-bottom: 40px;
+}
+
+.lsplit,
+.rsplit {
     height: 520px;
-}
-
-main .lsplit {
+    flex-shrink: 1;
     width: 50%;
-    height: 100%;
-}
-
-main .rsplit {
-    width: 48%;
-    height: 100%;
 }
 
 .videoThumbs {
@@ -314,6 +312,29 @@ textarea {
     padding: 4px 10px;
 }
 
+h2 {
+    font-weight: bold;
+}
+
+.third {
+    margin: 0 8px;
+}
+
+.quote {
+    background: #fff;
+    box-shadow: 0 5px 20px -3px rgba(0, 0, 0, .2);
+    border-radius: 18px;
+    padding: 12px 16px;
+    font-size: 24px;
+    font-style: italic;
+    margin: 0 8px;
+}
+
+.quote p {
+    text-align: right;
+    margin-bottom: 0;
+}
+
 @media (max-width: 600px) {
     main {
         width: 98%;
@@ -322,4 +343,14 @@ textarea {
     .signupGroup {
         width: 100%;
     }
+
+    .splits {
+        flex-direction: column;
+    }
+
+    .lsplit,
+    .rsplit {
+        width: 100%;
+    }
 }
+

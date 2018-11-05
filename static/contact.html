@@ -1,77 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Contact | Studybuddy @ Cal!</title>
-  <link rel="stylesheet" href="/css/main.css">
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126639713-1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Contact | Studybuddy @ Cal!</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126639713-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
 
-    gtag('config', 'UA-126639713-1');
-  </script>
-</head>
+      gtag('config', 'UA-126639713-1');
+    </script>
+  </head>
 
-<body>
-  <header>
-    <div id="logo">
-      <a href="/">
-        <img src="/img/logo.png" alt="Studybuddy">
-      </a>
-    </div>
-    <nav>
-      <a href="/signup">sign up</a>
-      <a href="/faq">faq</a>
-      <a href="/contact">contact</a>
-    </nav>
-  </header>
-  <main>
-    <h1 class="vprop">
-      <em>Contact</em> Studybuddy.
-    </h1>
-    <div class="inputGroup required">
-      <label for="user_name">
-        <h2>What's your name?</h2>
-      </label>
-      <input type="text" name="user_name">
-    </div>
-    <div class="inputGroup required">
-      <label for="user_email">
-        <h2>What's your email address?</h2>
-      </label>
-      <input type="email" name="user_email">
-    </div>
-    <div class="inputGroup">
-      <label for="user_type">
-        <h2>What do you do?</h2>
-      </label>
-      <select name="user_type" id="user_type">
-        <option value="" selected>-- Choose one --</option>
-        <option value="berkeley_student">Berkeley Student</option>
-        <option value="student">Non-Berkeley Student</option>
-        <option value="course_staff">Course staff</option>
-        <option value="other">None of these</option>
-      </select>
-    </div>
-    <div class="inputGroup required">
-      <label for="user_content">
-        <h2>What do you want to say?</h2>
-      </label>
-      <textarea name="user_content"></textarea>
-    </div>
-    <div class="inputGroup">
-      <button class="sendButton">Send</button>
-    </div>
-  </main>
-  <footer>
-    Studybuddy is built with ️❤️ and ☕️ at UC Berkeley.
-  </footer>
-  <script src="/js/main.js"></script>
-</body>
+  <body>
+    <header>
+      <div id="logo">
+        <a href="/">
+          <img src="/img/logo.png" alt="Studybuddy">
+        </a>
+      </div>
+      <nav>
+        <a href="/signup" class="signupLink">sign up</a>
+        <a href="/faq">faq</a>
+        <a href="/contact">contact</a>
+      </nav>
+    </header>
+    <main>
+      <h1 class="vprop">
+        <em>Contact</em> Studybuddy.
+      </h1>
+      <div class="inputGroup required">
+        <label for="user_name">
+          <h2>What's your name?</h2>
+        </label>
+        <input type="text" name="user_name">
+      </div>
+      <div class="inputGroup required">
+        <label for="user_email">
+          <h2>What's your email address?</h2>
+        </label>
+        <input type="email" name="user_email">
+      </div>
+      <div class="inputGroup">
+        <label for="user_type">
+          <h2>What do you do?</h2>
+        </label>
+        <select name="user_type" id="user_type">
+          <option value="" selected>-- Choose one --</option>
+          <option value="berkeley_student">Berkeley Student</option>
+          <option value="student">Non-Berkeley Student</option>
+          <option value="course_staff">Course staff</option>
+          <option value="other">None of these</option>
+        </select>
+      </div>
+      <div class="inputGroup required">
+        <label for="user_content">
+          <h2>What do you want to say?</h2>
+        </label>
+        <textarea name="user_content"></textarea>
+      </div>
+      <div class="inputGroup">
+        <button class="sendButton">Send</button>
+      </div>
+    </main>
+    <footer>
+      <nav>
+        <a href="/signup">sign up</a>
+        <a href="/faq">faq</a>
+        <a href="/contact">contact</a>
+      </nav>
+    </footer>
+    <script src="/js/main.js"></script>
+  </body>
 
 </html>
