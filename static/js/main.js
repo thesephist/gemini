@@ -1,15 +1,10 @@
 // Active A/B tests go here
 const AB_TEST_REPLACEMENTS = {
     // el: [...textContentOptions]
-    'main .question': [
-        'Midterms coming up?',
-        'Lost in class?',
-        'Can\'t focus alone?',
-    ],
     '.signupButton': [
         'Sign up',
-        'Get matched',
         'Start looking',
+        'Find your studybuddy now',
     ],
 };
 
@@ -225,5 +220,20 @@ document.addEventListener('DOMContentLoaded', () => {
 
         });
 
+    }
+
+    const videoThumb = document.querySelector('.videoThumbs .video');
+    const thumbs = document.querySelector('.videoThumbs');
+
+    if (videoThumb) {
+        videoThumb.addEventListener('click', evt => {
+            if (!thumbs.classList.contains('playing')) {
+                thumbs.classList.add('playing');
+                document.querySelector('iframe').src += '&autoplay=1';
+            }
+        });
+        document.querySelector('.closeButton').addEventListener('click', evt => {
+            thumbs.classList.remove('playing');
+        });
     }
 });

@@ -39,23 +39,23 @@ p {
 /* CSS VARS */
 
 body {
-    --sb-dark-purple: #634dd5;
-    --sb-light-purple: #d9d3f3;
-    --sb-yellow: #f3c11e;
-    --sb-bg-purple: #efedf6;
+    --sb-dark-primary: #325aa2;
+    --sb-light-primary: #d0d6f1;
+    --sb-secondary: #f3c11e; /* darker than logo color, to stand out */
+    --sb-bg-primary: #f6f8Fd;
     --header-height: 80px;
 }
 
 body,
 textarea,
 input {
-    font-family: 'Helvetica', sans-serif;
+    font-family: 'Avenir', 'Helvetica', sans-serif;
 }
 
 /* APP STYLES */
 
 body {
-    background: var(--sb-bg-purple);
+    background: var(--sb-bg-primary);
 }
 
 header {
@@ -64,7 +64,7 @@ header {
     left: 0;
     right: 0;
     height: var(--header-height);
-    color: var(--sb-dark-purple);
+    color: var(--sb-dark-primary);
 }
 
 header,
@@ -103,7 +103,7 @@ nav {
 }
 
 nav a {
-    color: var(--sb-dark-purple);
+    color: var(--sb-dark-primary);
     text-decoration: none;
     cursor: pointer;
     margin-left: 18px;
@@ -117,8 +117,110 @@ main {
     margin: auto;
     margin-top: var(--header-height);
     padding: 20px;
-    width: 80%;
-    max-width: 700px;
+    width: 86%;
+    max-width: 1200px;
+    overflow: hidden;
+}
+
+.splits {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    height: 520px;
+}
+
+main .lsplit {
+    width: 50%;
+    height: 100%;
+}
+
+main .rsplit {
+    width: 48%;
+    height: 100%;
+}
+
+.videoThumbs {
+    position: relative;
+    height: 100%;
+}
+
+.videoThumbs .thumb {
+    --thumb-height: 180px;
+
+    position: absolute;
+    border-radius: 6px;
+    overflow: hidden;
+    height: var(--thumb-height);
+    width: calc(var(--thumb-height) * 16 / 9);
+    background: var(--sb-light-primary);
+    box-shadow: 0 5px 20px -3px rgba(0, 0, 0, .2);
+    transform: translate(-50%, -50%);
+    transition: transform .3s;
+}
+
+.videoThumbs .closeButton {
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0s;
+    transition-delay: 0s;
+}
+
+.videoThumbs .video {
+    top: 44%;
+    left: 42%;
+    background-image: url('/img/thumbvideo.jpg');
+    background-size: cover;
+}
+
+.videoThumbs .first {
+    top: 55%;
+    left: 57%;
+    background-image: url('/img/thumb1.jpg');
+    background-size: cover;
+}
+
+.videoThumbs .second {
+    top: 35%;
+    left: 66%;
+    background-image: url('/img/thumb2.jpg');
+    background-size: cover;
+}
+
+.videoThumbs iframe {
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity .3s;
+    height: 100%;
+    width: 100%;
+}
+
+.videoThumbs.playing iframe {
+    opacity: 1;
+    pointer-events: all;
+}
+
+.videoThumbs.playing .thumb {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(1.5);
+}
+
+.videoThumbs.playing .closeButton {
+    opacity: .7;
+    pointer-events: all;
+    position: absolute;
+    top: 74%;
+    left: 50%;
+    transform: translateX(-50%);
+    background: none;
+    color: grey;
+    font-size: 16px;
+    transition: opacity: .5s;
+    transition-delay: .7s;
+}
+
+.videoThumbs.playing .closeButton::after {
+    content: '';
 }
 
 .vprop {
@@ -127,7 +229,7 @@ main {
 }
 
 h1 em {
-    color: var(--sb-yellow);
+    color: var(--sb-dark-primary);
     font-style: normal;
 }
 
@@ -135,18 +237,17 @@ h1 em {
     min-width: 320px;
     width: 20%;
     margin: 64px 0;
-    margin-left: auto;
 }
 
 input,
 select,
 textarea {
-    background: var(--sb-light-purple);
+    background: var(--sb-light-primary);
     padding: 8px 12px;
 }
 
 button {
-    background: var(--sb-dark-purple);
+    background: var(--sb-dark-primary);
     color: #fff;
     padding: 10px 14px;
     cursor: pointer;
@@ -164,6 +265,7 @@ button {
     height: 42px;
     font-size: 22px;
     margin-top: 18px;
+    padding-top: 8px;
 }
 
 button:hover {
@@ -197,13 +299,19 @@ p {
 }
 
 p a {
-    color: var(--sb-dark-purple);
+    color: var(--sb-dark-primary);
 }
 
 textarea {
     resize: none;
     height: unset;
     min-height: 240px;
+}
+
+.signupLink {
+    background: var(--sb-light-primary);
+    border-radius: 4px;
+    padding: 4px 10px;
 }
 
 @media (max-width: 600px) {

@@ -1,49 +1,65 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Studybuddy @ Cal!</title>
-  <link rel="stylesheet" href="/css/main.css">
-  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126639713-1"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag() { dataLayer.push(arguments); }
-    gtag('js', new Date());
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Studybuddy</title>
+    <link rel="stylesheet" href="/css/main.css">
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-126639713-1"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
 
-    gtag('config', 'UA-126639713-1');
-  </script>
-</head>
+      gtag('config', 'UA-126639713-1');
+    </script>
+  </head>
 
-<body>
-  <header>
-    <div id="logo">
-      <a href="/">
-        <img src="/img/logo.png" alt="Studybuddy">
-      </a>
-    </div>
-    <nav>
-      <a href="/signup">sign up</a>
-      <a href="/faq">faq</a>
-      <a href="/contact">contact</a>
-    </nav>
-  </header>
-  <main>
-    <h1 class="vprop">
-      <em class="question">Midterms coming up?</em>
-      Find a Studybuddy.
-    </h1>
-    <div class="signupGroup">
-      <input class="signupEmail" type="email" placeholder="oski@berkeley.edu" />
-      <button class="signupButton">Sign up</button>
-    </div>
-  </main>
-  <footer>
-    Studybuddy is built with ️❤️ and ☕️ at UC Berkeley.
-  </footer>
-  <script src="/js/main.js"></script>
-</body>
+  <body>
+    <header>
+      <div id="logo">
+        <a href="/">
+          <img src="/img/logo.png" alt="Studybuddy">
+        </a>
+      </div>
+      <nav>
+        <a href="/signup" class="signupLink">sign up</a>
+        <a href="/faq">faq</a>
+        <a href="/contact">contact</a>
+      </nav>
+    </header>
+    <main>
+      <div class="splits">
+        <div class="lsplit">
+          <h1 class="vprop">
+            <em>Finding study partners</em>
+            shouldn't be harder than the class you're studying for.
+          </h1>
+          <h1>Find your studybuddy now.</h1>
+          <div class="signupGroup">
+            <input class="signupEmail" type="email" placeholder="oski@berkeley.edu" />
+            <button class="signupButton">Sign up</button>
+          </div>
+        </div>
+        <div class="rsplit">
+          <div class="videoThumbs">
+            <button class="closeButton">Close video</button>
+            <!-- reverse order of stacking -->
+            <div class="thumb second"></div>
+            <div class="thumb first"></div>
+            <div class="thumb video">
+              <iframe width="560" height="315" src="//www.youtube.com/embed/7iOCmGbIZ70?rel=0" frameborder="0" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <footer>
+      Studybuddy is built with ️❤️ and ☕️ at UC Berkeley.
+    </footer>
+    <script src="/js/main.js"></script>
+  </body>
 
 </html>
