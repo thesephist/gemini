@@ -44,6 +44,7 @@ body {
     --sb-secondary: #f3c11e; /* darker than logo color, to stand out */
     --sb-bg-primary: #f6f8Fd;
     --header-height: 80px;
+    --shadow: 0 5px 20px -3px rgba(0, 0, 0, .2);
 }
 
 body,
@@ -151,7 +152,7 @@ main {
     height: var(--thumb-height);
     width: calc(var(--thumb-height) * 16 / 9);
     background: var(--sb-light-primary);
-    box-shadow: 0 5px 20px -3px rgba(0, 0, 0, .2);
+    box-shadow: var(--shadow);
     transform: translate(-50%, -50%);
     transition: transform .3s;
 }
@@ -234,7 +235,7 @@ h1 em {
 .signupGroup {
     min-width: 320px;
     width: 20%;
-    margin: 64px 0;
+    margin-top: 32px;
 }
 
 input,
@@ -322,7 +323,7 @@ h2 {
 
 .quote {
     background: #fff;
-    box-shadow: 0 5px 20px -3px rgba(0, 0, 0, .2);
+    box-shadow: var(--shadow);
     border-radius: 18px;
     padding: 12px 16px;
     font-size: 24px;
@@ -333,6 +334,11 @@ h2 {
 .quote p {
     text-align: right;
     margin-bottom: 0;
+}
+
+.screenshots img {
+    box-shadow: var(--shadow);
+    max-width: 100%;
 }
 
 @media (max-width: 600px) {
