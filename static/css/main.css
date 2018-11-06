@@ -131,7 +131,7 @@ main {
 }
 
 section {
-    margin-bottom: 52px;
+    margin-bottom: 60px;
 }
 
 .lsplit,
@@ -141,13 +141,12 @@ section {
 }
 
 .videoThumbs {
+    --thumb-height: 180px;
     position: relative;
     height: 100%;
 }
 
 .videoThumbs .thumb {
-    --thumb-height: 180px;
-
     position: absolute;
     border-radius: 6px;
     overflow: hidden;
@@ -174,7 +173,7 @@ section {
     cursor: pointer;
 }
 
-.videoThumbs .video:hover {
+.videoThumbs:not(.playing) .video:hover {
     opacity: .9;
 }
 
@@ -215,18 +214,18 @@ section {
     opacity: .7;
     pointer-events: all;
     position: absolute;
-    top: 74%;
+    top: calc(50% + var(--thumb-height) / 2 + 28px);
     left: 50%;
     transform: translateX(-50%);
     background: none;
     color: grey;
-    font-size: 16px;
-    transition: opacity: .5s;
+    font-size: 18px;
+    transition: opacity .5s;
     transition-delay: .7s;
 }
 
 .videoThumbs.playing .closeButton::after {
-    content: '';
+    content: none; /* hide the '>' that normal buttons have */
 }
 
 .vprop {
