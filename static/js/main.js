@@ -233,7 +233,7 @@ document.addEventListener('DOMContentLoaded', () => {
         videoThumb.addEventListener('click', evt => {
             if (!thumbs.classList.contains('playing')) {
                 thumbs.classList.add('playing');
-                document.querySelector('iframe').src += '&autoplay=1';
+                document.querySelector('#desktopthumb').src += '&autoplay=1';
             }
         });
         document.querySelector('.closeButton').addEventListener('click', evt => {

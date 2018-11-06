@@ -120,7 +120,7 @@ main {
     margin-top: var(--header-height);
     padding: 20px;
     width: 86%;
-    max-width: 1200px;
+    max-width: 1100px;
     overflow: hidden;
 }
 
@@ -339,6 +339,7 @@ h2 {
     font-size: 24px;
     font-style: italic;
     margin: 0 8px;
+    margin-bottom: 24px;
 }
 
 .quote p {
@@ -387,9 +388,27 @@ h2 {
     transform: scale(1.1) perspective(800px) rotateY(-20deg) rotateX(9deg);
 }
 
-@media (max-width: 600px) {
+@media (max-width: 900px) {
     main {
-        width: 98%;
+        width: 96%;
+    }
+}
+
+#mobilethumb {
+    display: none;
+}
+
+@media (max-width: 800px) {
+    .videoThumbs {
+        display: none;
+    }
+
+    #mobilethumb {
+        --width: 90vw;
+
+        display: block;
+        width: var(--width);
+        height: calc(9 / 16 * var(--width));
     }
 
     .signupGroup {
@@ -404,5 +423,14 @@ h2 {
     .rsplit {
         width: 100%;
     }
+
+    .leftPerspective {
+        transform: scale(1) perspective(1400px) rotateY(21deg) rotateX(8deg) translateX(30px);
+    }
+
+    .rightPerspective {
+        transform: scale(1) perspective(1400px) rotateY(-20deg) rotateX(9deg) translateX(30px);
+    }
+
 }
 
