@@ -238,6 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
         document.querySelector('.closeButton').addEventListener('click', evt => {
             thumbs.classList.remove('playing');
+            document.querySelector('#desktopthumb').src = document.querySelector('#mobilethumb').src;
         });
     }
 });
