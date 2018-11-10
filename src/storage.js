@@ -28,7 +28,7 @@ class JSONStorage {
         if (!fs.existsSync(this.path)) {
             const dirname = path.dirname(this.path);
             mkdirp(dirname);
-            fs.writeFile(this.path, '', 'utf8', err => {
+            fs.writeFile(this.path, '{}', 'utf8', err => {
                 if (err) console.error(err);
             });
         } else {
