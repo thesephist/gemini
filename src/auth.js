@@ -8,14 +8,6 @@ const {
 
 const auth = passport => {
 
-    passport.serializeUser((user, done) => {
-        done(null, user);
-    });
-
-    passport.deserializeUser((user, done) => {
-        done(null, user);
-    });
-
     passport.use(
         new GoogleStrategy(
             {
@@ -24,31 +16,46 @@ const auth = passport => {
                 callbackURL: secrets.AUTH_HOST + secrets.AUTH_REDIRECT_URL,
             },
             (token, refreshToken, profile, done) => {
-                console.log(profile);
-                return done(null, {
-                    profile: profile,
-                    token: token,
-                });
+                return done(null, profile);
             }
         )
     );
+
+    passport.serializeUser((user, done) => {
+        done(null, user);
+    });
+
+    passport.deserializeUser((user, done) => {
+        done(null, user);
+    });
+
 };
 
 const getCurrentUser = req => {
     // TODO: speed this up with an in-memory
-    //  dict of email => user ID in our system
+    //  dict of google_id => user ID in our system
 
     if (req.user) {
-        return User.where({
-            email: req.user.email,
+        const users = User.where({
+            google_id: req.user.id,
         });
+        if (users.length === 0) {
+            return false;
+        } else {
+            return users[0];
+        }
     } else {
         return false;
     }
 }
 
+const requestAuthentication = res => {
+    res.redirect(302, '/auth');
+}
+
 module.exports = {
     auth,
     getCurrentUser,
+    requestAuthentication,
 }
 

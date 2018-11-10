@@ -1,6 +1,9 @@
 const fs = require('fs');
 const path = require('path');
 
+const secrets = require('../secrets.js');
+const config = require('../config.js');
+
 const express = require('express');
 const bodyParser = require('body-parser');
 const passport = require('passport');
@@ -17,22 +20,21 @@ const {
 const {
     auth,
     getCurrentUser,
+    requestAuthentication,
 } = require('./auth.js');
-const cookieSession = require('cookie-session');
-const cookieParser = require('cookie-parser');
-
-const secrets = require('../secrets.js');
-const config = require('../config.js');
+const session = require('express-session');
+app.use(session({
+    secret: secrets.COOKIE_KEY,
+    resave: false,
+    saveUninitialized: true,
+}));
 
 // AUTHENTICATION
 auth(passport);
 app.use(passport.initialize());
-app.use(cookieSession({
-    name: 'session',
-    keys: [secrets.COOKIE_KEY],
-}));
-app.use(cookieParser());
+app.use(passport.session());
 app.get('/auth', passport.authenticate('google', {
+    // TODO: if already authenticatd, bypass this and redireect to dashboard
     // When we add more authentication strategies, this should be /auth/google
     scope: ['email', 'profile'],
 }));
@@ -41,15 +43,15 @@ app.get(secrets.AUTH_REDIRECT_URL,
         failureRedirect: '/'
     }),
     (req, res) => {
-        // create user if new
         if (getCurrentUser(req) === false) {
-            // create new user
             const user = new User({
                 name: req.user.displayName,
-                email: req.user.email,
+                email: req.user.emails[0].value,
                 google_id: req.user.id,
+                // photo_url: req.photos[0].value,
             });
             user.save();
+            console.log('asfia', getCurrentUser(req));
         }
 
         res.redirect('/dashboard');
@@ -107,12 +109,16 @@ for (const [uri, renderer] of Object.entries(VIEW_PATHS)) {
         try {
             const current_user = getCurrentUser(req);
 
-            res.set('Content-Type', 'text/html');
-            const html = renderer(current_user, req.params);
-            if (html !== false) {
-                res.send(html);
+            if (current_user === false) {
+                requestAuthentication(res);
             } else {
-                respondWith(res, '404.html');
+                res.set('Content-Type', 'text/html');
+                const html = renderer(current_user, req.params);
+                if (html !== false) {
+                    res.send(html);
+                } else {
+                    respondWith(res, '404.html');
+                }
             }
         } catch (e) {
             console.error(e);

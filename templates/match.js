@@ -1,6 +1,6 @@
 const render = (current_user, {
-    // TODO
-}) => {
+    match,
+} = {}) => {
     return `
     `;
 }

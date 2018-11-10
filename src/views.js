@@ -26,7 +26,7 @@ const userView = (current_user, {
 }) => {
     const user = User.find(user_id);
     if (user) {
-        const innerPage = userTemplate({
+        const innerPage = userTemplate(current_user, {
             name: user.get('name'),
             email: user.get('email'),
         });
@@ -45,8 +45,8 @@ const matchView = (current_user, {
 }) => {
     const match = Match.find(match_id);
     if (user && match) {
-        const innerPage = matchTemplate({
-            // TODO: populate template
+        const innerPage = matchTemplate(current_user, {
+            match,
         });
 
         return renderFullPage(
@@ -59,7 +59,7 @@ const matchView = (current_user, {
 }
 
 const matchlistView = (current_user) => {
-    const innerPage = matchlistTemplate({
+    const innerPage = matchlistTemplate(current_user, {
         // TODO
     });
 

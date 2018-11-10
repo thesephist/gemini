@@ -31,6 +31,11 @@ class JSONStorage {
             fs.writeFile(this.path, '', 'utf8', err => {
                 if (err) console.error(err);
             });
+        } else {
+            this.inMemoryCopy = JSON.parse(fs.readFileSync(
+                this.path,
+                {encoding: 'utf8'},
+            ));
         }
     }
 
@@ -63,6 +68,7 @@ class JSONStorage {
         if (!(label in this.inMemoryCopy)) {
             this.inMemoryCopy[label] = {};
         }
+        this.flush();
     }
 
     _hasCollection(label) {
@@ -98,6 +104,7 @@ class JSONStorage {
         } else {
             throw new Error(`Could not find collection ${label} in database`);
         }
+        this.flush();
     }
 
     deleteFromCollection(label, id) {
@@ -110,6 +117,7 @@ class JSONStorage {
         } else {
             throw new Error(`Could not find collection ${label} in database`);
         }
+        this.flush();
     }
 
     updateInCollection(label, id, attributes) {
@@ -125,6 +133,7 @@ class JSONStorage {
         } else {
             throw new Error(`Could not find collection ${label} in database`);
         }
+        this.flush();
     }
 
     getFromCollection(label, id) {
@@ -149,7 +158,7 @@ class StoredObject {
         this._saved = false;
 
         this.id = shortid.generate();
-        this.attributes = {};
+        this.attributes = attributes;
     }
 
     static get label() {
@@ -163,12 +172,12 @@ class StoredObject {
     }
 
     static all() {
-        return db.getCollection(this.constructor.label);
+        return db.getCollection(this.label).map(obj => new this(obj));
     }
 
     static find(id) {
-        if (db.has(this.constructor.label, this.id)) {
-            return db.getFromCollection(this.constructor.label, this.id);
+        if (db.has(this.label, id)) {
+            return new this(db.getFromCollection(this.label, id));
         } else {
             return undefined;
         }
@@ -176,14 +185,16 @@ class StoredObject {
 
     static where(attributes) {
         const properties = Object.entries(attributes);
-        return this.all().reduce((acc, obj) => {
+        const objList = db.getCollection(this.label).reduce((acc, obj) => {
             for (const [prop, val] of properties) {
                 if (obj[prop] !== val) {
-                    return;
+                    return acc;
                 }
             }
             acc.push(obj);
+            return acc;
         }, []);
+        return objList.map(obj => new this(obj));
     }
 
     delete() {
@@ -216,7 +227,7 @@ class StoredObject {
                     this.attributes
                 );
             } else {
-                db.createCollection(
+                db.createInCollection(
                     this.constructor.label,
                     this.id,
                     this.attributes
@@ -224,7 +235,6 @@ class StoredObject {
             }
             this._saved = true;
         }
-        db.flush();
     }
 
 }
@@ -284,6 +294,7 @@ class User extends StoredObject {
     }
 
 }
+db.createCollection(User.label);
 
 class Match extends StoredObject {
 
@@ -327,6 +338,7 @@ class Match extends StoredObject {
     }
 
 }
+db.createCollection(Match.label);
 
 module.exports = {
     User,
