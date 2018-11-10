@@ -51,7 +51,6 @@ app.get(secrets.AUTH_REDIRECT_URL,
                 // photo_url: req.photos[0].value,
             });
             user.save();
-            console.log('asfia', getCurrentUser(req));
         }
 
         res.redirect('/dashboard');
