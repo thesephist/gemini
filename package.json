@@ -7,16 +7,14 @@
   "author": "Linus Lee <linus@thesephist.com>",
   "license": "MIT",
   "scripts": {
-    "start": "node ./src/main.js",
-    "deploy": "surge --domain studybuddycal.surge.sh -p ./static/"
-  },
-  "devDependencies": {
-    "surge": "^0.20.1"
+    "start": "node ./src/main.js"
   },
   "dependencies": {
     "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "mkdirp": "^0.5.1",
+    "passport": "^0.4.0",
+    "passport-google-oauth": "^1.0.0",
     "shortid": "^2.2.14"
   }
 }

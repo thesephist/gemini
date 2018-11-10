@@ -5,7 +5,7 @@ Studybuddy Prototype.
 ## General Administrivia
 
 - Google Analytics through l7@berkeley.edu
-- To be deployed on studybuddy.surge.sh
+- Update Google Analytics to be at getstudybuddy.com
 
 ## Todos
 
