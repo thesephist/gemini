@@ -3,14 +3,63 @@ const path = require('path');
 
 const express = require('express');
 const bodyParser = require('body-parser');
+const passport = require('passport');
 const app = express();
 
 app.use(bodyParser.json());
 
 const api = require('./api.js');
 const views = require('./views.js');
+const {
+    User,
+} = require('./storage.js');
 
+const {
+    auth,
+    getCurrentUser,
+} = require('./auth.js');
+const cookieSession = require('cookie-session');
+const cookieParser = require('cookie-parser');
+
+const secrets = require('../secrets.js');
 const config = require('../config.js');
+
+// AUTHENTICATION
+auth(passport);
+app.use(passport.initialize());
+app.use(cookieSession({
+    name: 'session',
+    keys: [secrets.COOKIE_KEY],
+}));
+app.use(cookieParser());
+app.get('/auth', passport.authenticate('google', {
+    // When we add more authentication strategies, this should be /auth/google
+    scope: ['email', 'profile'],
+}));
+app.get(secrets.AUTH_REDIRECT_URL,
+    passport.authenticate('google', {
+        failureRedirect: '/'
+    }),
+    (req, res) => {
+        // create user if new
+        if (getCurrentUser(req) === false) {
+            // create new user
+            const user = new User({
+                name: req.user.displayName,
+                email: req.user.email,
+                google_id: req.user.id,
+            });
+            user.save();
+        }
+
+        res.redirect('/dashboard');
+    }
+);
+app.get('/logout', (req, res) => {
+    req.logout();
+    req.session = null;
+    res.redirect('/');
+});
 
 // STATIC ASSETS
 const STATIC_PATHS = {
@@ -49,14 +98,14 @@ console.log('Initialized static paths');
 // VIEWS
 const VIEW_PATHS = {
     '/user/:user_id': views.userView,
+    '/dashboard': views.matchlistView, // TODO: make a dashboard
     '/requests': views.matchlistView,
     '/match/:match_id': views.matchView,
 }
 for (const [uri, renderer] of Object.entries(VIEW_PATHS)) {
     app.get(uri, (req, res) => {
         try {
-            // TODO: authentication!
-            const current_user = new User();
+            const current_user = getCurrentUser(req);
 
             res.set('Content-Type', 'text/html');
             const html = renderer(current_user, req.params);
@@ -97,8 +146,7 @@ for (const [spec, handler] of Object.entries(API_PATHS)) {
 
     appMethod(route, (req, res) => {
         try {
-            // TODO: authentication!
-            const current_user = new User();
+            const current_user = getCurrentUser(req);
 
             res.set('Content-Type', 'application/json');
             res.send(handler(current_user, req.params, req.body));

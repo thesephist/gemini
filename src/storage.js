@@ -20,6 +20,8 @@ class JSONStorage {
         this.path = db_path;
         this.inMemoryCopy = {};
 
+        this._flushRequests = [];
+
         // create a file there if not already exists
         // No try-catch here since the app should fail
         //  loudly if the DB doesn't exist
@@ -32,6 +34,9 @@ class JSONStorage {
         }
     }
 
+    // TODO: revise this so it's safe to call flush() multiple times
+    //  in rapid succession -- it should queue up flushes and
+    //  perform them in order using this._flushRequests.
     async flush() {
         try {
             const contents = JSON.stringify(this.inMemoryCopy);
@@ -219,6 +224,7 @@ class StoredObject {
             }
             this._saved = true;
         }
+        db.flush();
     }
 
 }
@@ -234,6 +240,7 @@ class User extends StoredObject {
             name: String,
             email: String,
             availability: Object,
+            google_id: String,
         }
     }
 

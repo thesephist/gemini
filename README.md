@@ -7,5 +7,3 @@ Studybuddy Prototype.
 - Google Analytics through l7@berkeley.edu
 - Update Google Analytics to be at getstudybuddy.com
 
-## Todos
-

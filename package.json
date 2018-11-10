@@ -11,6 +11,8 @@
   },
   "dependencies": {
     "body-parser": "^1.18.3",
+    "cookie-parser": "^1.4.3",
+    "cookie-session": "^2.0.0-beta.3",
     "express": "^4.16.4",
     "mkdirp": "^0.5.1",
     "passport": "^0.4.0",
