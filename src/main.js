@@ -9,6 +9,9 @@ app.use(bodyParser.urlencoded({
     extended: false,
 }));
 
+const api = require('./api.js');
+const views = require('./views.js');
+
 const config = require('../config.js');
 
 // STATIC ASSETS
@@ -40,7 +43,6 @@ for (const [uri, path] of Object.entries(STATIC_PATHS)) {
     });
 }
 app.use('/static', express.static('static'));
-
 
 
 // VIEWS
