@@ -43,36 +43,30 @@ const userView = (current_user, {
 const matchView = (current_user, {
     match_id,
 }) => {
-    const user = User.find(user_id);
     const match = Match.find(match_id);
     if (user && match) {
         const innerPage = matchTemplate({
-            name: user.get('name'),
-            email: user.get('email'),
+            // TODO: populate template
         });
 
         return renderFullPage(
-            `${user.get('name')} | Studybuddy`,
+            `Match Request | Studybuddy`,
             innerPage
         );
+    } else {
+        return false;
     }
-    return userTemplate()
 }
 
 const matchlistView = (current_user) => {
-    const user = User.find(user_id);
-    if (user) {
-        const innerPage = userTemplate({
-            name: user.get('name'),
-            email: user.get('email'),
-        });
+    const innerPage = matchlistTemplate({
+        // TODO
+    });
 
-        return renderFullPage(
-            `${user.get('name')} | Studybuddy`,
-            innerPage
-        );
-    }
-    return userTemplate()
+    return renderFullPage(
+        `Match requests | Studybuddy`,
+        innerPage
+    );
 }
 
 module.exports = {

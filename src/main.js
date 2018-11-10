@@ -57,7 +57,12 @@ for (const [uri, renderer] of Object.entries(VIEW_PATHS)) {
             const current_user = new User();
 
             res.set('Content-Type', 'text/html');
-            res.send(renderer(current_user, req.params));
+            const html = renderer(current_user, req.params);
+            if (html !== false) {
+                res.send(html);
+            } else {
+                respondWith(res, '404.html');
+            }
         } catch (e) {
             console.error(e);
             respondWith(res, '500.html');
