@@ -168,7 +168,7 @@ section {
 .videoThumbs .video {
     top: 44%;
     left: 42%;
-    background-image: url('/img/thumbvideo.jpg');
+    background-image: url('/static/img/thumbvideo.jpg');
     background-size: cover;
     cursor: pointer;
 }
@@ -180,14 +180,14 @@ section {
 .videoThumbs .first {
     top: 55%;
     left: 57%;
-    background-image: url('/img/thumb1.jpg');
+    background-image: url('/static/img/thumb1.jpg');
     background-size: cover;
 }
 
 .videoThumbs .second {
     top: 35%;
     left: 66%;
-    background-image: url('/img/thumb2.jpg');
+    background-image: url('/static/img/thumb2.jpg');
     background-size: cover;
 }
 

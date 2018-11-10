@@ -7,9 +7,15 @@
   "author": "Linus Lee <linus@thesephist.com>",
   "license": "MIT",
   "scripts": {
+    "start": "node ./src/main.js",
     "deploy": "surge --domain studybuddycal.surge.sh -p ./static/"
   },
   "devDependencies": {
     "surge": "^0.20.1"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4",
+    "shortid": "^2.2.14"
   }
 }
