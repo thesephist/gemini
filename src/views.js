@@ -1,4 +1,83 @@
+const {
+    User,
+    Match,
+} = require('./storage.js');
+
+const headerTemplate = require('../templates/pageheader.js');
+const footerTemplate = require('../templates/pagefooter.js');
+
+const userTemplate = require('../templates/user.js');
+const matchTemplate = require('../templates/match.js');
+const matchlistTemplate = require('../templates/matchlist.js');
+
 const config = require('../config.js');
 
-module.exports = {};
+/**
+ * Renders a full page with Studybuddy header and footer
+ */
+const renderFullPage = (title, innerPage) => {
+    return headerTemplate({
+        title: title,
+    }) + innerPage + footerTemplate({});
+}
+
+const userView = (current_user, {
+    user_id,
+}) => {
+    const user = User.find(user_id);
+    if (user) {
+        const innerPage = userTemplate({
+            name: user.get('name'),
+            email: user.get('email'),
+        });
+
+        return renderFullPage(
+            `${user.get('name')} | Studybuddy`,
+            innerPage
+        );
+    } else {
+        return false;
+    }
+}
+
+const matchView = (current_user, {
+    match_id,
+}) => {
+    const user = User.find(user_id);
+    const match = Match.find(match_id);
+    if (user && match) {
+        const innerPage = matchTemplate({
+            name: user.get('name'),
+            email: user.get('email'),
+        });
+
+        return renderFullPage(
+            `${user.get('name')} | Studybuddy`,
+            innerPage
+        );
+    }
+    return userTemplate()
+}
+
+const matchlistView = (current_user) => {
+    const user = User.find(user_id);
+    if (user) {
+        const innerPage = userTemplate({
+            name: user.get('name'),
+            email: user.get('email'),
+        });
+
+        return renderFullPage(
+            `${user.get('name')} | Studybuddy`,
+            innerPage
+        );
+    }
+    return userTemplate()
+}
+
+module.exports = {
+    userView,
+    matchView,
+    matchlistView,
+};
 

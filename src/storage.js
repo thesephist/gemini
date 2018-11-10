@@ -2,6 +2,10 @@ const fs = require('fs');
 const mkdirp = require('mkdirp');
 const shortid = require('shortid');
 
+const {
+    now,
+} = require('./utils.js');
+
 const config = require('../config.js');
 
 /**
@@ -142,17 +146,26 @@ class StoredObject {
         this.attributes = {};
     }
 
-    get label() {
+    static get label() {
         throw new Error('This method should be overridden in child classes!');
         return 'storedobject';
     }
 
-    static all() {
-        return db.getCollection(this.label);
+    static get schema() {
+        throw new Error('This method should be overridden in child classes!');
+        return {};
     }
 
-    static get(id) {
-        db.getFromCollection(this.label, this.id);
+    static all() {
+        return db.getCollection(this.constructor.label);
+    }
+
+    static find(id) {
+        if (db.has(this.constructor.label, this.id)) {
+            return db.getFromCollection(this.constructor.label, this.id);
+        } else {
+            return undefined;
+        }
     }
 
     static where(attributes) {
@@ -168,8 +181,8 @@ class StoredObject {
     }
 
     delete() {
-        if (db.has(this.label, this.id)) {
-            db.deleteFromCollection(this.label, this.id);
+        if (db.has(this.constructor.label, this.id)) {
+            db.deleteFromCollection(this.constructor.label, this.id);
         }
         this._saved = true;
     }
@@ -179,6 +192,10 @@ class StoredObject {
         this._saved = false;
     }
 
+    get(attr) {
+        return this.attributes[attr];
+    }
+
     setAttributes(attrs = {}) {
         this.attributes = Object.assign(this.attributes, attrs);
         this._saved = false;
@@ -186,15 +203,15 @@ class StoredObject {
 
     save() {
         if (!this._saved) {
-            if (db.has(this.label, this.id)) {
+            if (db.has(this.constructor.label, this.id)) {
                 db.updateInCollection(
-                    this.label,
+                    this.constructor.label,
                     this.id,
                     this.attributes
                 );
             } else {
                 db.createCollection(
-                    this.label,
+                    this.constructor.label,
                     this.id,
                     this.attributes
                 );
@@ -207,16 +224,98 @@ class StoredObject {
 
 class User extends StoredObject {
 
-    get label() {
+    static get label() {
         return 'user';
+    }
+
+    static get schema() {
+        return {
+            name: String,
+            email: String,
+            availability: Object,
+        }
+    }
+
+    requestMatch(respondent, matchAttrs) {
+        const matchRequest = Match.where({
+            requester_id: respondent.id,
+            respondent_id: this.id,
+        });
+
+        if (matchRequest.length > 0) {
+            this.acceptMatch(matchRequest[0]);
+        } else {
+            const match = new Match({
+                requester_id: this.id,
+                respondent_id: respondent.id,
+                ...matchAttrs,
+            });
+        }
+    }
+
+    getMatches() {
+        Match.where({
+            requester_id: this.id,
+        });
+    }
+
+    acceptMatch(match) {
+        if (match.get('respondent_id') === this.id) {
+            match.accept();
+        }
+    }
+
+    rejectMatch(match) {
+        if (match.get('respondent_id') === this.id) {
+            match.reject();
+        }
+    }
+
+    notify(message) {
+        // TODO: notification logic
     }
 
 }
 
 class Match extends StoredObject {
 
-    get label() {
+    constructor(attributes = {}) {
+        super();
+
+        this.set('created_time', now());
+    }
+
+    static get label() {
         return 'match';
+    }
+
+    static get schema() {
+        return {
+            created_time: Number,
+            responded_time: Number,
+            accepted: Boolean,
+
+            requester_id: String,
+            respondent_id: String,
+
+            class: String,
+            proficiency: Number,
+            reason: String,
+        }
+    }
+
+    accept() {
+        this.setAttributes({
+            accepted: true,
+            responded_time: now(),
+        });
+    }
+
+    reject() {
+        this.setAttributes({
+            accepted: false,
+            responded_time: now(),
+        });
     }
 
 }
