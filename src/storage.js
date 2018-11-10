@@ -16,8 +16,8 @@ const config = require('../config.js');
  */
 class JSONStorage {
 
-    constructor(path) {
-        this.path = path;
+    constructor(db_path) {
+        this.path = db_path;
         this.inMemoryCopy = {};
 
         // create a file there if not already exists
