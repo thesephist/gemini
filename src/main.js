@@ -19,6 +19,7 @@ const STATIC_PATHS = {
     '/faq': 'faq.html',
     '/signup': 'signup.html',
     '/privacy': 'privacy.html',
+    '/tos': 'tos.html',
 }
 const respondWith = (res, static_path) => {
     fs.readFile(`static/${static_path}`, 'utf8', (err, data) => {
