@@ -22,9 +22,15 @@ const render = (current_user) => {
 
           <h3>You're looking for a Studybuddy for ${courseFromSlug(req.get('course'))} to work on ${req.get('reason')}.</h3>
 
-          <div class="candidates">
-          ${req.getSortedCandidates().map(request => candidateBox(request.user, request))}
+          <div class="matches">
+          ${req.getRequestedMatches().map(match => matchBox(match))}
           </div>
+
+          <div class="candidates">
+          ${req.getSortedCandidates().map(request => candidateBox(request.user, req, request))}
+          </div>
+
+          <script src="/static/js/dashboard.js"></script>
         `;
     } else {
         return `
@@ -37,12 +43,27 @@ const render = (current_user) => {
 
 }
 
-const candidateBox = (user, request) => {
+const matchBox = (match) => {
+    const user = match.requesterRequest.user;
     return `
-    <div class="candidateName">${user.get('name')}</div>
-    <div class="candidateReason">${request.get('reason')}</div>
+    <div class="requestedMatch">
+      <div class="candidateName">${user.get('name')}</div>
+      <div class="candidateReason">${match.requesterRequest.get('reason')}</div>
 
-    <button class="messageButton">Message</button>
+      <button class="acceptButton" data-match-id="${match.id}">Accept</button>
+      <button class="declineButton" data-match-id="${match.id}">Decline</button>
+    </div>
+    `;
+}
+
+const candidateBox = (user, myRequest, otherRequest) => {
+    return `
+    <div class="candidateItem">
+      <div class="candidateName">${user.get('name')}</div>
+      <div class="candidateReason">${otherRequest.get('reason')}</div>
+
+      <button class="messageButton" data-request-id="${myRequest.id}" data-respondent-request-id="${otherRequest.id}">Message</button>
+    </div>
     `;
 }
 

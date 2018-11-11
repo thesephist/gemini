@@ -373,33 +373,63 @@ class Request extends StoredObject {
         return User.find(this.get('user_id'));
     }
 
+    getResolvedMatches() {
+        return Match.where({
+            requester_request_id: this.id,
+            accepted: true,
+        }).concat(Match.where({
+            respondent_request_id: this.id,
+            accepted: true,
+        }));
+    }
+
+    getRequestedMatches() {
+        return Match.where({
+            respondent_request_id: this.id,
+            accepted: null,
+        });
+    }
+
     getSortedCandidates() {
         const candidateRequests = this.constructor.where({
-            course: this.course,
+            course: this.get('course'),
         });
 
         const sortedRequests = sortBy(candidateRequests, req => {
             return Math.abs(req.get('proficiency') - this.get('proficiency'));
         });
 
+        const copy = sortedRequests.filter(req => req.id === this.id)[0];
+        sortedRequests.splice(sortedRequests.indexOf(copy), 1);
+
         return sortedRequests;
     }
 
     createMatch(respondent_request, message = '') {
-        const match = new Match({
+        let matches = Match.where({
             requester_request_id: this.id,
             respondent_request_id: respondent_request.id,
-            message: message,
         });
-        match.save();
+        let match;
+        if (matches.length > 0) {
+            match = matches[0]
+        } else {
+            match = new Match({
+                requester_request_id: this.id,
+                respondent_request_id: respondent_request.id,
+                message: message,
+            });
+            match.save();
 
-        respondent_request.user.notify(
-            `Studybuddy request from ${this.user.get('name')}`,
-            `<p>
-            Hi! I'm ${this.user.get('name')} and I'm looking for a study buddy for ${this.get('course')}. Do you want to study together?
-            </p>
-            <p><a href="${config.AUTH_HOST}/match/${match.id}">Respond on Studybuddy</a></p>`,
-        );
+            respondent_request.user.notify(
+                `Studybuddy request from ${this.user.get('name')}`,
+                `<p>
+                    Hi! I'm ${this.user.get('name')} and I'm looking for a study buddy for ${this.get('course')}. Do you want to study together?
+                </p>
+                <p><a href="${config.AUTH_HOST}/match/${match.id}">Respond on Studybuddy</a></p>`,
+            );
+        }
+
         return match;
     }
 
@@ -450,6 +480,14 @@ class Match extends StoredObject {
         ];
     }
 
+    get requesterRequest() {
+        return Request.find(this.get('requester_request_id'));
+    }
+
+    get respondentRequest() {
+        return Request.find(this.get('respondent_request_id'));
+    }
+
     accept() {
         this.setAttributes({
             accepted: true,
@@ -461,8 +499,8 @@ class Match extends StoredObject {
         const respondent = Request.find(this.get('respondent_request_id')).user;
 
         requester.notify(
-            `${respondent} accepted your Studybuddy request!`,
-            `${respondent} accepted your Studybuddy request. Contact them by emailing ${respondent.get('email')}`
+            `${respondent.get('name')} accepted your Studybuddy request!`,
+            `${respondent.get('name')} accepted your Studybuddy request. Contact them by emailing ${respondent.get('email')}`
         );
     }
 
@@ -477,8 +515,8 @@ class Match extends StoredObject {
         const respondent = Request.find(this.get('respondent_request_id')).user;
 
         requester.notify(
-            `${respondent} declined your Studybuddy request`,
-            `${respondent} declined your Studybuddy request.`
+            `${respondent.get('name')} declined your Studybuddy request`,
+            `${respondent.get('name')} declined your Studybuddy request.`
         );
     }
 

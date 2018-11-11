@@ -7,8 +7,6 @@ const createRequest = () => {
     const proficiency = getValueForName('user_level');
     const reason = getValueForName('user_topic');
 
-    console.log(course, proficiency, reason);
-
     if (!course) {
         window.alert('Please pick a course for your studybuddy.');
         return;

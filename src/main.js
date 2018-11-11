@@ -167,8 +167,8 @@ const API_PATHS = {
     'GET /api/match/:match_id': api.match.get,
     'POST /api/request/:request_id/match': api.match.create,
     'PUT /api/match/:match_id': api.match.update,
-    'POST /api/accept_match/:match_id': api.match.accept,
-    'POST /api/reject_match/:match_id': api.match.reject,
+    'POST /api/match/:match_id/accept': api.match.accept,
+    'POST /api/match/:match_id/reject': api.match.reject,
 }
 const METHODS = ['GET', 'POST', 'PUT', 'DELETE'];
 for (const [spec, handler] of Object.entries(API_PATHS)) {
