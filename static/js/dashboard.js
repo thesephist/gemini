@@ -2,8 +2,14 @@ const sendMessage = evt => {
     const request_id = evt.target.getAttribute('data-request-id');
     const respondent_request_id = evt.target.getAttribute('data-respondent-request-id');
 
+    const name = evt.target.getAttribute('data-user-name');
+    const course = evt.target.getAttribute('data-course');
+
     // TODO: make this atrocity not suck as much
-    const message = window.prompt('What\'s your message?');
+    const message = window.prompt(
+        'What\'s your message?',
+        `Hi! I'm ${name} and I'm looking for a study buddy for ${course}. Are you available?`
+    );
 
     fetch(`/api/request/${request_id}/match`, {
         method: 'POST',

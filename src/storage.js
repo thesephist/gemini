@@ -13,6 +13,7 @@ const {
     now,
 } = require('./utils.js');
 
+const secrets = require('../secrets.js');
 const config = require('../config.js');
 
 /**
@@ -431,10 +432,11 @@ class Request extends StoredObject {
 
             respondent_request.user.notify(
                 `Studybuddy request from ${this.user.get('name')}`,
-                `<p>
-                    Hi! I'm ${this.user.get('name')} and I'm looking for a study buddy for ${this.get('course')}. Do you want to study together?
-                </p>
-                <p><a href="${config.AUTH_HOST}/match/${match.id}">Respond on Studybuddy</a></p>`,
+                `
+                <p>${message}</p>
+                <hr/>
+                <p>${this.user.get('name')} wants to work on: ${this.get('reason')}</p>
+                <p><a href="${secrets.AUTH_HOST}/match/${match.id}">Click here</a> to respond on Studybuddy!</p>`,
             );
         }
 
@@ -508,7 +510,10 @@ class Match extends StoredObject {
 
         requester.notify(
             `${respondent.get('name')} accepted your Studybuddy request!`,
-            `${respondent.get('name')} accepted your Studybuddy request. Contact them by emailing ${respondent.get('email')}`
+            `
+            <p><strong>${respondent.get('name')}</strong> accepted your Studybuddy request.</p>
+            <p><a href="${secrets.AUTH_HOST}/match/${this.id}?source=accept">Click here</a> to see their email and contact them!</p>
+            `
         );
     }
 
@@ -524,7 +529,10 @@ class Match extends StoredObject {
 
         requester.notify(
             `${respondent.get('name')} declined your Studybuddy request`,
-            `${respondent.get('name')} declined your Studybuddy request.`
+            `
+            <p><strong>${respondent.get('name')}</strong> declined your Studybuddy request.</p>
+            <p><a href="${secrets.AUTH_HOST}/dashboard?source=decline">Click here</a> to find more students.</p>
+            `
         );
     }
 

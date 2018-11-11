@@ -70,7 +70,7 @@ const render = (current_user) => {
             <H2>Other students in ${course}</h2>
             <div class="grid">
               ${candidates.length ? (
-                  candidates.map(request => candidateBox(request.user, req, request))
+                  candidates.map(request => candidateBox(current_user, request.user, req, request))
               ) : (
                   emptyMessage('Nobody from your course is here yet. Invite them to join!')
               )}
@@ -90,14 +90,19 @@ const render = (current_user) => {
 
 }
 
-const candidateBox = (user, myRequest, otherRequest) => {
+const candidateBox = (current_user, user, myRequest, otherRequest) => {
     return `
     <div class="candidateItem gridItem">
       <div class="itemName">${user.get('name')}</div>
       <div class="itemDescription"><strong>Wants to work on:</strong> ${otherRequest.get('reason')}</div>
 
-      ${myRequest.hasRequestedMatch(otherRequest) ? (
-            `<button class="messageButton" data-request-id="${myRequest.id}" data-respondent-request-id="${otherRequest.id}">Message</button>`
+      ${!myRequest.hasRequestedMatch(otherRequest) ? (
+          `<button class="messageButton"
+                    data-request-id="${myRequest.id}"
+                    data-respondent-request-id="${otherRequest.id}"
+                    data-user-name="${current_user.get('name')}"
+                    data-course="${courseFromSlug(myRequest.get('course'))}"
+          >Message</button>`
       ) : (
           `<button data-request-id="${myRequest.id}" data-respondent-request-id="${otherRequest.id}" disabled>Messaged</button>`
       )}
