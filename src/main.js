@@ -36,9 +36,13 @@ app.use(passport.session());
 app.get('/auth', (req, res) => {
     const current_user = getCurrentUser(req);
     if (current_user !== false) {
-        res.redirect('/dashboard');
+        res.redirect(302, '/dashboard');
+    } else {
+        res.redirect(302, '/auth/google');
     }
-}, passport.authenticate('google', {
+}
+);
+app.get('/auth/google', passport.authenticate('google', {
     scope: ['email', 'profile'],
 }));
 app.get('/signup', (req, res) => {
