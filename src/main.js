@@ -62,9 +62,24 @@ app.get('/logout', (req, res) => {
     res.redirect('/');
 });
 
+// MAIN PAGE
+app.get('/', (req, res) => {
+    try {
+        const current_user = getCurrentUser(req);
+
+        if (current_user === false) {
+            respondWith(res, 'index.html');
+        } else {
+            res.redirect(302, '/dashboard');
+        }
+    } catch (e) {
+        console.error(e);
+        respondWith(res, '500.html');
+    }
+});
+
 // STATIC ASSETS
 const STATIC_PATHS = {
-    '/': 'index.html',
     '/contact': 'contact.html',
     '/faq': 'faq.html',
     '/signup': 'signup.html',
