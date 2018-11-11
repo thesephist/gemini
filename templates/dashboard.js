@@ -47,7 +47,7 @@ const render = (current_user) => {
             <div class="grid">
               ${
                 acceptedMatches.length ? (
-                    acceptedMatches.map(match => matchBox(match))
+                    acceptedMatches.map(match => matchBox(match)).join('\n')
                 ) : (
                     emptyMessage(`You haven't accepted any requests yet`)
                 )
@@ -59,7 +59,7 @@ const render = (current_user) => {
             <h2>Requests for you</h2>
             <div class="grid">
               ${requestedMatches.length ? (
-                  requestedMatches.map(match => matchBox(match))
+                  requestedMatches.map(match => matchBox(match)).join('\n')
               ) : (
                   emptyMessage('No requests for you yet')
               )}
@@ -70,7 +70,7 @@ const render = (current_user) => {
             <H2>Other students in ${course}</h2>
             <div class="grid">
               ${candidates.length ? (
-                  candidates.map(request => candidateBox(current_user, request.user, req, request))
+                  candidates.map(request => candidateBox(current_user, request.user, req, request)).join('\n')
               ) : (
                   emptyMessage('Nobody from your course is here yet. Invite them to join!')
               )}
