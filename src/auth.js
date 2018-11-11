@@ -37,7 +37,6 @@ const getCurrentUser = req => {
     // TODO: speed this up with an in-memory
     //  dict of google_id => user ID in our system
 
-    // FIXME for testing:
     if (req.user) {
         const users = User.where({
             google_id: req.user.id,

@@ -33,9 +33,12 @@ app.use(session({
 auth(passport);
 app.use(passport.initialize());
 app.use(passport.session());
-app.get('/auth', passport.authenticate('google', {
-    // TODO: if already authenticated, bypass this and redireect to dashboard
-    // When we add more authentication strategies, this should be /auth/google
+app.get('/auth', (req, res) => {
+    const current_user = getCurrentUser(req);
+    if (current_user !== false) {
+        res.redirect('/dashboard');
+    }
+}, passport.authenticate('google', {
     scope: ['email', 'profile'],
 }));
 app.get('/signup', (req, res) => {
