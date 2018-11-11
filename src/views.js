@@ -17,10 +17,10 @@ const config = require('../config.js');
 /**
  * Renders a full page with Studybuddy header and footer
  */
-const renderFullPage = (title, innerPage) => {
-    return headerTemplate({
+const renderFullPage = (current_user, title, innerPage) => {
+    return headerTemplate(current_user, {
         title: title,
-    }) + innerPage + footerTemplate({});
+    }) + innerPage + footerTemplate(current_user, {});
 }
 
 const userView = (current_user, {
@@ -34,6 +34,7 @@ const userView = (current_user, {
         });
 
         return renderFullPage(
+            current_user,
             `${user.get('name')} | Studybuddy`,
             innerPage
         );
@@ -52,6 +53,7 @@ const matchView = (current_user, {
         });
 
         return renderFullPage(
+            current_user,
             `Match Request | Studybuddy`,
             innerPage
         );
@@ -66,6 +68,7 @@ const dashboardView = (current_user) => {
     });
 
     return renderFullPage(
+        current_user,
         `Dashboard | Studybuddy`,
         innerPage
     );
@@ -77,6 +80,7 @@ const newRequestView = (current_user) => {
     });
 
     return renderFullPage(
+        current_user,
         `New request | Studybuddy`,
         innerPage
     );
@@ -88,6 +92,7 @@ const matchlistView = (current_user) => {
     });
 
     return renderFullPage(
+        current_user,
         `Match requests | Studybuddy`,
         innerPage
     );

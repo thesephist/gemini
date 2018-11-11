@@ -1,9 +1,8 @@
-const render = () => {
+const render = (current_user) => {
     return `
     </main>
     <footer>
       <nav>
-        <a href="/signup">sign up</a>
         <a href="/faq">faq</a>
         <a href="/contact">contact</a>
       </nav>

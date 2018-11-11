@@ -26,8 +26,6 @@ class JSONStorage {
         this.path = db_path;
         this.inMemoryCopy = {};
 
-        this._flushRequests = [];
-
         // create a file there if not already exists
         // No try-catch here since the app should fail
         //  loudly if the DB doesn't exist
@@ -38,10 +36,20 @@ class JSONStorage {
                 if (err) console.error(err);
             });
         } else {
-            this.inMemoryCopy = JSON.parse(fs.readFileSync(
+            const dbContents = fs.readFileSync(
                 this.path,
-                {encoding: 'utf8'},
-            ));
+                {encoding: 'utf8'}
+            );
+            try {
+                this.inMemoryCopy = JSON.parse(dbContents);
+            } catch (e) {
+                console.error(`Error while reading JSON database`, e);
+                console.log('JSON dump:', dbContents);
+                console.log('Rebuilding JSON database');
+                fs.writeFile(this.path, '{}', 'utf8', err => {
+                    if (err) console.error(err);
+                });
+            }
         }
     }
 
@@ -163,8 +171,12 @@ class StoredObject {
     constructor(attributes = {}) {
         this._saved = false;
 
-        this.id = shortid.generate();
-        this.attributes = Object.assign(this.constructor.defaults, attributes);
+        this.id = attributes.id || shortid.generate();
+        this.attributes = Object.assign(
+            this.constructor.defaults,
+            attributes,
+            {id: this.id}
+        );
     }
 
     static get label() {
@@ -175,6 +187,10 @@ class StoredObject {
     static get schema() {
         throw new Error('This method should be overridden in child classes!');
         return {};
+    }
+
+    static get writable() {
+        return Object.keys(this.schema);
     }
 
     static all() {
@@ -203,6 +219,13 @@ class StoredObject {
         return objList.map(obj => new this(obj));
     }
 
+    toJSON() {
+        return {
+            id: this.id,
+            ...this.attributes,
+        };
+    }
+
     delete() {
         if (db.has(this.constructor.label, this.id)) {
             db.deleteFromCollection(this.constructor.label, this.id);
@@ -211,8 +234,10 @@ class StoredObject {
     }
 
     set(attr, value) {
-        this.attributes[attr] = value;
-        this._saved = false;
+        if (!(attr in this.constructor.writable)) {
+            this.attributes[attr] = value;
+            this._saved = false;
+        }
     }
 
     get(attr) {
@@ -220,8 +245,9 @@ class StoredObject {
     }
 
     setAttributes(attrs = {}) {
-        this.attributes = Object.assign(this.attributes, attrs);
-        this._saved = false;
+        for (const [attr, value] of Object.entries(attrs)) {
+            this.set(attr, value);
+        }
     }
 
     save() {
@@ -253,6 +279,7 @@ class User extends StoredObject {
 
     static get schema() {
         return {
+            id: String,
             name: String,
             email: String,
             availability: Object,
@@ -269,6 +296,12 @@ class User extends StoredObject {
         }
     }
 
+    static get writable() {
+        return [
+            'availability',
+        ];
+    }
+
     createRequest(course, proficiency, reason) {
         const existingRequest = Request.where({
             user_id: this.id,
@@ -281,6 +314,7 @@ class User extends StoredObject {
                 reason,
             });
             request.save();
+            return request;
         } else {
             const request = new Request({
                 user_id: this.id,
@@ -289,6 +323,7 @@ class User extends StoredObject {
                 reason,
             });
             request.save();
+            return request;
         }
     }
 
@@ -307,6 +342,7 @@ class Request extends StoredObject {
 
     static get schema() {
         return {
+            id: String,
             user_id: String,
             course: String,
             proficiency: Number,
@@ -325,6 +361,14 @@ class Request extends StoredObject {
         }
     }
 
+    static get writable() {
+        return [
+            'proficiency',
+            'reason',
+            'closed',
+        ];
+    }
+
     get user() {
         return User.find(this.get('user_id'));
     }
@@ -341,7 +385,7 @@ class Request extends StoredObject {
         return sortedRequests;
     }
 
-    requestMatch(respondent_request, message) {
+    createMatch(respondent_request, message = '') {
         const match = new Match({
             requester_request_id: this.id,
             respondent_request_id: respondent_request.id,
@@ -356,6 +400,7 @@ class Request extends StoredObject {
             </p>
             <p><a href="${config.AUTH_HOST}/match/${match.id}">Respond on Studybuddy</a></p>`,
         );
+        return match;
     }
 
 }
@@ -375,6 +420,7 @@ class Match extends StoredObject {
 
     static get schema() {
         return {
+            id: String,
             created_time: Number,
             responded_time: Number,
             accepted: Boolean,
@@ -397,11 +443,19 @@ class Match extends StoredObject {
         }
     }
 
+    static get writable() {
+        return [
+            'requester_request_id',
+            'respondent_request_id',
+        ];
+    }
+
     accept() {
         this.setAttributes({
             accepted: true,
             responded_time: now(),
         });
+        this.save();
 
         const requester = Request.find(this.get('requester_request_id')).user;
         const respondent = Request.find(this.get('respondent_request_id')).user;
@@ -417,6 +471,7 @@ class Match extends StoredObject {
             accepted: false,
             responded_time: now(),
         });
+        this.save();
 
         const requester = Request.find(this.get('requester_request_id')).user;
         const respondent = Request.find(this.get('respondent_request_id')).user;

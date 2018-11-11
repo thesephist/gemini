@@ -33,10 +33,6 @@ const ifttt_request = (eventName, ...parameters) => {
     });
 }
 
-const ifttt_signup = (...parameters) => {
-    return ifttt_request('studybuddycal_signup', ...parameters);
-}
-
 const ifttt_contact = (...parameters) => {
     return ifttt_request('studybuddycal_contact', ...parameters);
 }
@@ -82,7 +78,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     const signupButton = document.querySelector('.signupButton');
-    const submitButton = document.querySelector('.submitButton');
     const sendButton = document.querySelector('.sendButton');
 
     if (signupButton) {
@@ -96,74 +91,6 @@ document.addEventListener('DOMContentLoaded', () => {
                 await analytics('Landing page', 'submit', 'non-Berkeley email');
                 window.location.href = `/signup?email=${email}`;
             }
-        });
-    }
-
-    if (submitButton) {
-
-        // first, if the link is with an email put that in
-        const emailMatch = window.location.search.match(/\?email=(.+@.+)/);
-        if (emailMatch) {
-            const email = emailMatch[1];
-            document.querySelector('[name=user_email]').value = email;
-        }
-
-        const notEmpty = data => data.toString().trim() !== '';
-        const VALIDATION = {
-            'input[name=user_name]': {
-                func: notEmpty,
-                message: 'Please tell us your name!',
-            },
-            'input[name=user_email]': {
-                func: validateBerkeleyEmail,
-                message: 'Did you correctly enter your berkeley.edu email?'
-            },
-            'select[name=user_class]': {
-                func: notEmpty,
-                message: 'Did you pick a class?',
-            },
-        };
-
-        // attach event listener
-        submitButton.addEventListener('click', () => {
-            if (validateInputFields(VALIDATION)) {
-
-                const KEY_INPUT_NAME = {
-                    name: 'user_name',
-                    email: 'user_email',
-                    class: 'user_class',
-                    level: 'user_level',
-                    topic: 'user_topic',
-                    avail: 'user_availability',
-                };
-
-                const parse = (tpl, ...parameters) => {
-                    const getval = key => {
-                        return document.querySelector(`[name=${KEY_INPUT_NAME[key]}]`).value.trim();
-                    }
-
-                    let result = tpl[0];
-                    let counter = 0;
-                    for (const piece of tpl.slice(1)) {
-                        result += getval(parameters[counter++]) + piece;
-                    }
-                    return result;
-                }
-
-                ifttt_signup(
-                    parse`${'name'} (${'email'})`,
-                    parse`${'class'}: ${'level'}`,
-                    parse`${'topic'}, AVAIL ${'avail'}`
-                ).then(async () => {
-                    await analytics('Signup page', 'submit', 'form');
-                    alert(parse`Thanks ${'name'}! We'll get back to you in the next few days with your group!`);
-                    window.location.href = '/';
-                }).catch(e => {
-                    analytics('Signup page', 'error');
-                    alert(`Looks like there was an error signing up. Would you try again?\nError: ${e}`);
-                });
-            }
-
         });
     }
 

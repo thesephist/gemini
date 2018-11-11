@@ -1,4 +1,4 @@
-const render = ({
+const render = (current_user, {
     title,
 }) => {
     return `
@@ -29,7 +29,9 @@ const render = ({
         </a>
       </div>
       <nav>
-        <a href="/signup" class="signupLink">sign up</a>
+        ${current_user === false ? (
+            '<a href="/signup" class="signupLink">sign up</a>'
+        ) : ''}
         <a href="/faq">faq</a>
         <a href="/contact">contact</a>
       </nav>

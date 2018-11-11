@@ -3,6 +3,10 @@ const {
     Request,
 } = require('../src/storage.js');
 
+const {
+    courseFromSlug,
+} = require('../src/utils.js');
+
 const render = (current_user) => {
 
     // one request per user for now
@@ -16,7 +20,7 @@ const render = (current_user) => {
           <h1>Studybuddy <em>dashboard</em></h1>
           <h2>${current_user.get('name')} | ${current_user.get('email')}</h2>
 
-          <h3>You're looking for a Studybuddy for ${req.get('course')} to work on ${req.get('reason')}.</h3>
+          <h3>You're looking for a Studybuddy for ${courseFromSlug(req.get('course'))} to work on ${req.get('reason')}.</h3>
 
           <div class="candidates">
           ${req.getSortedCandidates().map(request => candidateBox(request.user, request))}
@@ -38,7 +42,7 @@ const candidateBox = (user, request) => {
     <div class="candidateName">${user.get('name')}</div>
     <div class="candidateReason">${request.get('reason')}</div>
 
-    [contact button with email icon]
+    <button class="messageButton">Message</button>
     `;
 }
 

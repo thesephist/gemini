@@ -34,10 +34,13 @@ auth(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 app.get('/auth', passport.authenticate('google', {
-    // TODO: if already authenticatd, bypass this and redireect to dashboard
+    // TODO: if already authenticated, bypass this and redireect to dashboard
     // When we add more authentication strategies, this should be /auth/google
     scope: ['email', 'profile'],
 }));
+app.get('/signup', (req, res) => {
+    res.redirect(302, '/auth');
+});
 app.get(secrets.AUTH_REDIRECT_URL,
     passport.authenticate('google', {
         failureRedirect: '/'
@@ -82,7 +85,6 @@ app.get('/', (req, res) => {
 const STATIC_PATHS = {
     '/contact': 'contact.html',
     '/faq': 'faq.html',
-    '/signup': 'signup.html',
     '/privacy': 'privacy.html',
     '/tos': 'tos.html',
 }
@@ -146,14 +148,18 @@ console.log('Initialized view paths');
 
 // API
 const API_PATHS = {
-    'GET /api/user/:user_id': api.user_get,
-    'PUT /api/user/:user_id': api.user_update,
+    'GET /api/user/:user_id': api.user.get,
 
-    'GET /api/match/:match_id': api.match_get,
-    'POST /api/match': api.match_create,
-    'PUT /api/match/:match_id': api.match_update,
-    'POST /api/accept_match/:match_id': api.match_accept,
-    'POST /api/reject_match/:match_id': api.match_reject,
+    'GET /api/request/:request_id': api.request.get,
+    'POST /api/request': api.request.create,
+    'PUT /api/request/:request_id': api.request.update,
+    'DELETE /api/request/:request_id': api.request.close,
+
+    'GET /api/match/:match_id': api.match.get,
+    'POST /api/request/:request_id/match': api.match.create,
+    'PUT /api/match/:match_id': api.match.update,
+    'POST /api/accept_match/:match_id': api.match.accept,
+    'POST /api/reject_match/:match_id': api.match.reject,
 }
 const METHODS = ['GET', 'POST', 'PUT', 'DELETE'];
 for (const [spec, handler] of Object.entries(API_PATHS)) {
@@ -170,7 +176,8 @@ for (const [spec, handler] of Object.entries(API_PATHS)) {
             const current_user = getCurrentUser(req);
 
             res.set('Content-Type', 'application/json');
-            res.send(handler(current_user, req.params, req.body));
+            const result = handler(current_user, req.params, req.body);
+            res.send(JSON.stringify(result));
         } catch (e) {
             console.error(e);
             res.set('Content-Type', 'application/json');
