@@ -67,9 +67,11 @@ app.get(secrets.AUTH_REDIRECT_URL,
     }
 );
 app.get('/logout', (req, res) => {
-    req.logout();
-    req.session = null;
-    res.redirect('/');
+    req.session.destroy(_ => {
+        req.logout();
+        req.session = null;
+        res.redirect('/');
+    });
 });
 
 // MAIN PAGE
