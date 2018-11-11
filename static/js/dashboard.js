@@ -20,6 +20,7 @@ const sendMessage = evt => {
     .then(res => res.json)
     .then(response => {
         window.alert('Your message was sent!');
+        window.location.href = '/dashboard';
     });
 }
 
@@ -31,6 +32,8 @@ const sendAccept = evt => {
         cache: 'no-cache',
         credentials: 'same-origin',
     });
+
+    window.location.href = '/dashboard';
 }
 
 const sendDecline = evt => {
@@ -41,6 +44,8 @@ const sendDecline = evt => {
         cache: 'no-cache',
         credentials: 'same-origin',
     });
+
+    window.location.href = '/dashboard';
 }
 
 const goToMatch = evt => {

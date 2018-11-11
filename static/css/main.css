@@ -486,11 +486,12 @@ h2 {
 .accepted .itemName,
 .matches .itemName {
     cursor: pointer;
+    transition: opacity .15s;
 }
 
 .accepted .itemName:hover,
 .matches .itemName:hover {
-    opacity: .8;
+    opacity: .5;
 }
 
 .gridItem .itemSub {

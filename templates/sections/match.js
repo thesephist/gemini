@@ -8,6 +8,7 @@ const matchBox = (match) => {
       <div class="itemName" data-match-id="${match.id}">${user.get('name')}</div>
       ${accepted ? `<div class="itemSub"><a href="mailto:${email}">${email}</a></div>` : ''}
       <div class="itemDescription"><strong>Wants to work on:</strong> ${match.requesterRequest.get('reason')}</div>
+      <div class="itemDescription"><strong>Message:</strong> ${match.get('message')}</div>
 
       ${accepted ? '' : (
       `<div class="buttonSet">
