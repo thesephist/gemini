@@ -43,6 +43,10 @@ body {
     --sb-light-primary: #d0d6f1;
     --sb-secondary: #f3c11e; /* darker than logo color, to stand out */
     --sb-bg-primary: #f6f8Fd;
+
+    --sb-affirmative: #39a573;
+    --sb-negative: #da4669;
+
     --header-height: 80px;
     --shadow: 0 5px 20px -3px rgba(0, 0, 0, .3);
 }
@@ -258,9 +262,9 @@ textarea {
 button {
     background: var(--sb-dark-primary);
     color: #fff;
-    padding: 10px 14px;
+    padding: 10px;
     cursor: pointer;
-    transition: opacity .2s;
+    transition: opacity .1s;
 }
 
 input,
@@ -272,16 +276,17 @@ button {
     border-radius: 6px;
     width: 100%;
     height: 42px;
-    font-size: 22px;
+    font-size: 20px;
     margin-top: 18px;
     padding-top: 8px;
 }
 
 button:hover {
-    opacity: .9;
+    opacity: .7;
 }
+
 button:hover::after {
-    transform: translateX(14px);
+    transform: translateX(4px);
 }
 
 button::after {
@@ -291,7 +296,15 @@ button::after {
     display: inline-block;
 }
 
-.inputGroup,
+button[disabled] {
+    background: var(--sb-secondary);
+}
+
+button[disabled]::after {
+    content: '✓';
+}
+
+button.short::a.inputGroup,
 .questionGroup {
     margin-bottom: 40px;
 }
@@ -388,9 +401,120 @@ h2 {
     transform: scale(1.1) perspective(800px) rotateY(-20deg) rotateX(9deg);
 }
 
+.pageSub,
+.panel h2 {
+    margin-bottom: 24px;
+}
+
+.panel {
+    background: #fff;
+    margin-bottom: 24px;
+    padding: 20px;
+    border-top: 4px solid var(--sb-dark-primary);
+}
+
+.currentRequest div {
+    font-size: 1.4em;
+}
+
+.grid {
+    --items-per-grid: 3;
+
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.gridItem {
+    flex-shrink: 1;
+    flex-grow: 1;
+    max-width: calc(100% / var(--items-per-grid) - 16px);
+    background: var(--sb-bg-primary);
+    box-shadow: var(--shadow);
+    padding: 8px 10px;
+    margin: 8px;
+}
+
+@media (max-width: 1000px) {
+    .grid {
+        --items-per-grid: 2;
+    }
+}
+@media (max-width: 580px) {
+    .grid {
+        --items-per-grid: 1;
+    }
+}
+
+.grid .emptyMessage {
+    width: 100%;
+    height: 80px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    color: #aaa;
+    font-size: 2em;
+}
+
+.buttonSet {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.buttonSet button {
+    width: calc(50% - 4px);
+}
+
+.acceptButton {
+    background: var(--sb-affirmative);
+}
+
+.declineButton {
+    background: var(--sb-negative);
+}
+
+.gridItem .itemName {
+    font-size: 1.8em;
+    font-weight: bold;
+}
+
+.gridItem .itemSub {
+    margin-bottom: 18px;
+    margin-top: -16px;
+    font-size: 1.2em;
+    color: #555;
+}
+
+.gridItem .itemSub a {
+    color: #555;
+}
+
+.gridItem .itemDescription {
+    font-size: 1.2em;
+}
+
+.gridItem strong {
+    color: var(--sb-dark-primary);
+}
+
+.gridItem .itemName,
+.gridItem .itemSub,
+.gridItem .itemDescription {
+    margin-bottom: 16px;
+}
+
 @media (max-width: 900px) {
     main {
-        width: 96%;
+        width: 98%;
+        padding: 8px;
+    }
+    .panel {
+        padding: 12px;
     }
 }
 
