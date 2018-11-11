@@ -330,7 +330,6 @@ class Request extends StoredObject {
     }
 
     getSortedCandidates() {
-        // TODO: sort by availability when that's a thing
         const candidateRequests = this.constructor.where({
             course: this.course,
         });
@@ -339,7 +338,7 @@ class Request extends StoredObject {
             return Math.abs(req.get('proficiency') - this.get('proficiency'));
         });
 
-        return sortedRequests.map(req => User.find(req.get('user_id')));
+        return sortedRequests;
     }
 
     requestMatch(respondent_request, message) {
