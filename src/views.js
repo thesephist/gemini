@@ -47,7 +47,7 @@ const matchView = (current_user, {
     match_id,
 }) => {
     const match = Match.find(match_id);
-    if (user && match) {
+    if (match) {
         const innerPage = matchTemplate(current_user, {
             match,
         });

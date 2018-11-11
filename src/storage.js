@@ -373,7 +373,7 @@ class Request extends StoredObject {
         return User.find(this.get('user_id'));
     }
 
-    getResolvedMatches() {
+    getAcceptedMatches() {
         return Match.where({
             requester_request_id: this.id,
             accepted: true,

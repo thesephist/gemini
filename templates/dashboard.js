@@ -3,6 +3,8 @@ const {
     Request,
 } = require('../src/storage.js');
 
+const matchBox = require('./sections/match.js');
+
 const {
     courseFromSlug,
 } = require('../src/utils.js');
@@ -28,7 +30,7 @@ const render = (current_user) => {
         const req = requests[0];
         const course = courseFromSlug(req.get('course'));
 
-        const resolvedMatches = req.getResolvedMatches();
+        const acceptedMatches = req.getAcceptedMatches();
         const requestedMatches = req.getRequestedMatches();
         const candidates = req.getSortedCandidates();
 
@@ -40,12 +42,12 @@ const render = (current_user) => {
               <div>You're looking for a Studybuddy for <strong>${course}</strong> to work on <strong>${req.get('reason')}</strong>.</div>
           </div>
 
-          <div class="resolved panel">
+          <div class="accepted panel">
             <h2>Accepted Studybuddies</h2>
             <div class="grid">
               ${
-                resolvedMatches.length ? (
-                    req.getResolvedMatches().map(match => matchBox(match, true))
+                acceptedMatches.length ? (
+                    acceptedMatches.map(match => matchBox(match))
                 ) : (
                     emptyMessage(`You haven't accepted any requests yet`)
                 )
@@ -57,7 +59,7 @@ const render = (current_user) => {
             <h2>Requests for you</h2>
             <div class="grid">
               ${requestedMatches.length ? (
-                  req.getRequestedMatches().map(match => matchBox(match, false))
+                  requestedMatches.map(match => matchBox(match))
               ) : (
                   emptyMessage('No requests for you yet')
               )}
@@ -68,7 +70,7 @@ const render = (current_user) => {
             <H2>Other students in ${course}</h2>
             <div class="grid">
               ${candidates.length ? (
-                  req.getSortedCandidates().map(request => candidateBox(request.user, req, request))
+                  candidates.map(request => candidateBox(request.user, req, request))
               ) : (
                   emptyMessage('Nobody from your course is here yet. Invite them to join!')
               )}
@@ -86,26 +88,6 @@ const render = (current_user) => {
         `;
     }
 
-}
-
-const matchBox = (match, resolved) => {
-    const user = match.requesterRequest.user;
-    const email = user.get('email');
-
-    return `
-    <div class="requestedMatch gridItem">
-      <div class="itemName">${user.get('name')}</div>
-      ${resolved ? `<div class="itemSub"><a href="mailto:${email}">${email}</a></div>` : ''}
-      <div class="itemDescription"><strong>Wants to work on:</strong> ${match.requesterRequest.get('reason')}</div>
-
-      ${resolved ? '' : (
-      `<div class="buttonSet">
-        <button class="declineButton" data-match-id="${match.id}">Decline</button>
-        <button class="acceptButton" data-match-id="${match.id}">Accept</button>
-      </div>`
-      )}
-    </div>
-    `;
 }
 
 const candidateBox = (user, myRequest, otherRequest) => {

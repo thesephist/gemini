@@ -43,15 +43,26 @@ const sendDecline = evt => {
     });
 }
 
+const goToMatch = evt => {
+    const match_id = evt.target.getAttribute('data-match-id');
+
+    window.location.href = `/match/${match_id}`;
+}
+
 document.addEventListener('DOMContentLoaded', () => {
-    document.querySelector('.matches').addEventListener('click', evt => {
+    const matchClicks = evt => {
         const cls = evt.target.classList;
         if (cls.contains('acceptButton')) {
             sendAccept(evt);
         } else if (cls.contains('declineButton')) {
             sendDecline(evt);
+        } else if (cls.contains('itemName')) {
+            goToMatch(evt);
         }
-    });
+    }
+
+    document.querySelector('.accepted').addEventListener('click', matchClicks);
+    document.querySelector('.matches').addEventListener('click', matchClicks);
 
     document.querySelector('.candidates').addEventListener('click', evt => {
         if (evt.target.classList.contains('messageButton')) {

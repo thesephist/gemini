@@ -1,8 +1,21 @@
+const matchBox = require('./sections/match.js');
+
 const render = (current_user, {
     match,
 } = {}) => {
+    const requesterIsCurrentUser = current_user.id === match.requesterRequest.user.id;
+    const otherUser = requesterIsCurrentUser ? match.respondentRequest.user : match.requesterRequest.user;
+
     return `
-    [accept and decline button]. When you click accept, it shows their email.
+      ${requesterIsCurrentUser ? (
+        `<h1>Match with ${otherUser.get('name')}</h1>`
+      ) : (
+        `<h1>Request from ${otherUser.get('name')}</h1>`
+      )}
+
+      ${matchBox(match)}
+
+      <script src="/static/js/match.js"></script>
     `;
 }
 
