@@ -62,7 +62,11 @@ const candidateBox = (user, myRequest, otherRequest) => {
       <div class="candidateName">${user.get('name')}</div>
       <div class="candidateReason">${otherRequest.get('reason')}</div>
 
-      <button class="messageButton" data-request-id="${myRequest.id}" data-respondent-request-id="${otherRequest.id}">Message</button>
+      ${myRequest.hasRequestedMatch(otherRequest) ? (
+            `<button class="messageButton" data-request-id="${myRequest.id}" data-respondent-request-id="${otherRequest.id}">Message</button>`
+      ) : (
+          `<button data-request-id="${myRequest.id}" data-respondent-request-id="${otherRequest.id}" disabled>Messaged</button>`
+      )}
     </div>
     `;
 }

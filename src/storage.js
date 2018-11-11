@@ -405,6 +405,14 @@ class Request extends StoredObject {
         return sortedRequests;
     }
 
+    hasRequestedMatch(respondent_request) {
+        let matches = Match.where({
+            requester_request_id: this.id,
+            respondent_request_id: respondent_request.id,
+        });
+        return matches.length > 0;
+    }
+
     createMatch(respondent_request, message = '') {
         let matches = Match.where({
             requester_request_id: this.id,
