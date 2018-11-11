@@ -6,10 +6,6 @@ const shortid = require('shortid');
 const sortBy = require('lodash.sortby');
 
 const {
-    notify,
-} = require('./notify.js');
-
-const {
     now,
 } = require('./utils.js');
 
@@ -263,37 +259,26 @@ class User extends StoredObject {
     static get defaults() {
         return {
             name: 'Anonymous',
-            email: null,
+            email: null',
             availability: {},
             google_id: '',
         }
     }
 
     createRequest(course, proficiency, reason) {
-        const existingRequest = Request.where({
+        const request = new Request({
             user_id: this.id,
-            course: course,
+            course,
+            proficiency,
+            reason,
         });
-        if (existingRequest.length > 0) {
-            const request = existingRequest[0];
-            request.setAttributes({
-                proficiency,
-                reason,
-            });
-            request.save();
-        } else {
-            const request = new Request({
-                user_id: this.id,
-                course,
-                proficiency,
-                reason,
-            });
-            request.save();
-        }
+        request.save();
     }
 
-    notify(subject, message) {
-        notify(this, subject, message);
+    notify(message) {
+        // TODO: notification logic. Maybe email?
+
+        // TODO: Message: "You have a new study reqeust from {}" -- read on Studybuddy
     }
 
 }
@@ -325,10 +310,6 @@ class Request extends StoredObject {
         }
     }
 
-    get user() {
-        return User.find(this.get('user_id'));
-    }
-
     getSortedCandidates() {
         // TODO: sort by availability when that's a thing
         const candidateRequests = this.constructor.where({
@@ -342,21 +323,10 @@ class Request extends StoredObject {
         return sortedRequests.map(req => User.find(req.get('user_id')));
     }
 
-    requestMatch(respondent_request, message) {
+    requestMatch(respondent) {
         const match = new Match({
-            requester_request_id: this.id,
-            respondent_request_id: respondent_request.id,
-            message: message,
+            
         });
-        match.save();
-
-        respondent_request.user.notify(
-            `Studybuddy request from ${this.user.get('name')}`,
-            `<p>
-            Hi! I'm ${this.user.get('name')} and I'm looking for a study buddy for ${this.get('course')}. Do you want to study together?
-            </p>
-            <p><a href="${config.AUTH_HOST}/match/${match.id}">Respond on Studybuddy</a></p>`,
-        );
     }
 
 }
@@ -379,7 +349,6 @@ class Match extends StoredObject {
             created_time: Number,
             responded_time: Number,
             accepted: Boolean,
-            message: String,
 
             requester_request_id: String,
             respondent_request_id: String,
@@ -391,8 +360,6 @@ class Match extends StoredObject {
             created_time: null,
             responded_time: null,
             accepted: null,
-            message: '',
-
             requester_request_id: null,
             respondent_request_id: null,
         }
@@ -403,14 +370,6 @@ class Match extends StoredObject {
             accepted: true,
             responded_time: now(),
         });
-
-        const requester = Request.find(this.get('requester_request_id')).user;
-        const respondent = Request.find(this.get('respondent_request_id')).user;
-
-        requester.notify(
-            `${respondent} accepted your Studybuddy request!`,
-            `${respondent} accepted your Studybuddy request. Contact them by emailing ${respondent.get('email')}`
-        );
     }
 
     reject() {
@@ -418,14 +377,6 @@ class Match extends StoredObject {
             accepted: false,
             responded_time: now(),
         });
-
-        const requester = Request.find(this.get('requester_request_id')).user;
-        const respondent = Request.find(this.get('respondent_request_id')).user;
-
-        requester.notify(
-            `${respondent} declined your Studybuddy request`,
-            `${respondent} declined your Studybuddy request.`
-        );
     }
 
 }
@@ -433,7 +384,6 @@ db.createCollection(Match.label);
 
 module.exports = {
     User,
-    Request,
     Match,
     flush: async () => await db.flush(),
 };

@@ -2,7 +2,7 @@ const render = (current_user) => {
     // TODO:implement
 
     return `
-      <h1>Match list for ${current_user.get('name').split(' ')[0]}</h1>
+      <h1>Find a new studybuddy</h1>
       <p>under construction...</p>
     `;
 }

@@ -8,6 +8,8 @@ const {
 
 const auth = passport => {
 
+    // TODO: limit login to CalNet emails
+
     passport.use(
         new GoogleStrategy(
             {

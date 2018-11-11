@@ -99,8 +99,9 @@ console.log('Initialized static paths');
 // VIEWS
 const VIEW_PATHS = {
     '/user/:user_id': views.userView,
-    '/dashboard': views.matchlistView, // TODO: make a dashboard
+    '/dashboard': views.dashboardView,
     '/requests': views.matchlistView,
+    '/new_request': views.newRequestView,
     '/match/:match_id': views.matchView,
 }
 for (const [uri, renderer] of Object.entries(VIEW_PATHS)) {
