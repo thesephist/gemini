@@ -9,7 +9,6 @@ Studybuddy Prototype.
 - Profiles should have a year and major
 - Profile view with year and major
 - Disallow creating two requests at the same time (for now) at the model level
-- When I click in to see a request that was accepted by the other person, I see my info. Fix this.
 - Limit login to CalNet emails
 - Update the button on the front page to not take an email field
 - Log out button
