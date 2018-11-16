@@ -47,7 +47,7 @@ const render = (current_user) => {
             <div class="grid">
               ${
                 acceptedMatches.length ? (
-                    acceptedMatches.map(match => matchBox(match)).join('\n')
+                    acceptedMatches.map(match => matchBox(current_user, match)).join('\n')
                 ) : (
                     emptyMessage(`You haven't accepted any requests yet`)
                 )
@@ -59,7 +59,7 @@ const render = (current_user) => {
             <h2>Requests for you</h2>
             <div class="grid">
               ${requestedMatches.length ? (
-                  requestedMatches.map(match => matchBox(match)).join('\n')
+                  requestedMatches.map(match => matchBox(current_user, match)).join('\n')
               ) : (
                   emptyMessage('No requests for you yet')
               )}

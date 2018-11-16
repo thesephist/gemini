@@ -13,7 +13,7 @@ const render = (current_user, {
         `<h1>Request from ${otherUser.get('name')}</h1>`
       )}
 
-      ${matchBox(match)}
+      ${matchBox(current_user, match)}
 
       <script src="/static/js/match.js"></script>
     `;

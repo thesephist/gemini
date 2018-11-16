@@ -1,5 +1,7 @@
-const matchBox = (match) => {
-    const user = match.requesterRequest.user;
+const matchBox = (current_user, match) => {
+    const requesterIsCurrentUser = current_user.id === match.requesterRequest.user.id;
+    const user = requesterIsCurrentUser ? match.respondentRequest.user : match.requesterRequest.user;
+
     const email = user.get('email');
     const accepted = match.get('accepted') === true;
 
