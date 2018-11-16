@@ -10,7 +10,6 @@ const userTemplate = require('../templates/user.js');
 const matchTemplate = require('../templates/match.js');
 const dashboardTemplate = require('../templates/dashboard.js');
 const newRequestTemplate = require('../templates/new_request.js');
-const matchlistTemplate = require('../templates/matchlist.js');
 
 const config = require('../config.js');
 
@@ -86,23 +85,10 @@ const newRequestView = (current_user) => {
     );
 }
 
-const matchlistView = (current_user) => {
-    const innerPage = matchlistTemplate(current_user, {
-        // TODO
-    });
-
-    return renderFullPage(
-        current_user,
-        `Match requests | Studybuddy`,
-        innerPage
-    );
-}
-
 module.exports = {
     userView,
     dashboardView,
     newRequestView,
     matchView,
-    matchlistView,
 };
 

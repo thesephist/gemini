@@ -33,7 +33,7 @@ const contact = (sender_name, sender_email, sender_type, message) => {
         return console.log(
             'CONTACT:',
             sender_name,
-            sender_email
+            sender_email,
             sender_type,
             message
         );

@@ -126,7 +126,6 @@ console.log('Initialized static paths');
 const VIEW_PATHS = {
     '/user/:user_id': views.userView,
     '/dashboard': views.dashboardView,
-    '/requests': views.matchlistView,
     '/new_request': views.newRequestView,
     '/match/:match_id': views.matchView,
 }
