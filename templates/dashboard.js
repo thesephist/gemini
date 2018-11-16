@@ -67,7 +67,7 @@ const render = (current_user) => {
           </div>
 
           <div class="candidates panel">
-            <H2>Other students in ${course}</h2>
+            <H2>Your classmates in ${course}</h2>
             <div class="grid">
               ${candidates.length ? (
                   candidates.map(request => candidateBox(current_user, request.user, req, request)).join('\n')
