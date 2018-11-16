@@ -34,8 +34,9 @@ const auth = passport => {
 };
 
 const getCurrentUser = req => {
-    // TODO: speed this up with an in-memory
-    //  dict of google_id => user ID in our system
+    if (secrets.DEVELOPMENT) {
+        return User.all()[0];
+    }
 
     if (req.user) {
         const users = User.where({

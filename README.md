@@ -13,4 +13,5 @@ Studybuddy Prototype.
 - Google Analytics through l7@berkeley.edu
 - Update Google Analytics to be at getstudybuddy.com
 
+- speed up `getCurrentUser` in `./src/auth.js` with an in-memory key value store for `user.google_id` -> `user.id`
 

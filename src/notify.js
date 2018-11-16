@@ -8,6 +8,15 @@ const mg = mailgun.client({
 });
 
 const notify = (target_user, subject, message) => {
+    if (secrets.DEVELOPMENT) {
+        return console.log(
+            'NOTIFY:',
+            target_user.get('email'),
+            subject,
+            message
+        );
+    }
+
     return mg.messages.create(secrets.MG_DOMAIN, {
         from: 'Studybuddy <notify@getstudybuddy.com>',
         to: [target_user.get('email')],
@@ -20,6 +29,15 @@ const notify = (target_user, subject, message) => {
 }
 
 const contact = (sender_name, sender_email, sender_type, message) => {
+    if (secrets.DEVELOPMENT) {
+        return console.log(
+            'CONTACT:',
+            sender_name,
+            sender_email
+            sender_type,
+            message
+        );
+    }
     return mg.messages.create(secrets.MG_DOMAIN, {
         from: `${sender_name} <${sender_email}>`,
         to: ['hi@getstudybuddy.com'],
