@@ -10,6 +10,7 @@ Studybuddy Prototype.
 
 - Limit login to CalNet emails
 - Make tutor a special level of proficiency, and give them a badge that's "Verified tutor"
+- If you hit "cancel" on the message send dialog, it still sends a message. Fix this.
 - Put verified tutors on the top of the list in search in a separate subsection
 - Add a section to the landing page that calls out tutors to sign up.
 - Profiles should have a year and major
