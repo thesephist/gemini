@@ -13,6 +13,7 @@ Studybuddy Prototype.
 - Put verified tutors on the top of the list in search in a separate subsection
 - Add a section to the landing page that calls out tutors to sign up.
 - Profiles should have a year and major
+- Update screenshots on the landing page to be actually screenshots, not renders.
 
 ### Usability / bug
 
