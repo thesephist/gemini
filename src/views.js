@@ -62,9 +62,7 @@ const matchView = (current_user, {
 }
 
 const dashboardView = (current_user) => {
-    const innerPage = dashboardTemplate(current_user, {
-        // TODO
-    });
+    const innerPage = dashboardTemplate(current_user);
 
     return renderFullPage(
         current_user,
@@ -74,9 +72,7 @@ const dashboardView = (current_user) => {
 }
 
 const newRequestView = (current_user) => {
-    const innerPage = newRequestTemplate(current_user, {
-        // TODO
-    });
+    const innerPage = newRequestTemplate(current_user);
 
     return renderFullPage(
         current_user,

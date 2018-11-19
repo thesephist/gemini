@@ -364,8 +364,6 @@ h2 {
 .profiles img {
     box-shadow: var(--shadow);
     max-width: 100%;
-
-    /* TODO: fix this */
     width: 45%;
 }
 

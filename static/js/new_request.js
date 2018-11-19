@@ -7,8 +7,11 @@ const createRequest = () => {
     const proficiency = getValueForName('user_level');
     const reason = getValueForName('user_topic');
 
-    if (!course) {
+    if (!course.trim()) {
         window.alert('Please pick a course for your studybuddy.');
+        return;
+    } else if (!reason.trim()) {
+        window.alert('Please let other students know what you\'re looking to work on');
         return;
     }
 
@@ -22,7 +25,7 @@ const createRequest = () => {
         body: JSON.stringify({
             course,
             proficiency,
-            reason,
+            reason.trim(),
         }),
     })
     .then(res => res.json)

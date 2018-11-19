@@ -5,29 +5,33 @@ const sendMessage = evt => {
     const name = evt.target.getAttribute('data-user-name');
     const course = evt.target.getAttribute('data-course');
 
-    // TODO: make this atrocity not suck as much
     const message = window.prompt(
         'What\'s your message?',
         `Hi! I'm ${name} and I'm looking for a study buddy for ${course}. Are you available?`
     );
 
-    fetch(`/api/request/${request_id}/match`, {
-        method: 'POST',
-        cache: 'no-cache',
-        credentials: 'same-origin',
-        headers: {
-            'Content-Type': 'application/json; charset=utf-8',
-        },
-        body: JSON.stringify({
-            respondent_request_id: respondent_request_id,
-            message: message,
-        }),
-    })
-    .then(res => res.json)
-    .then(response => {
-        window.alert('Your message was sent!');
-        window.location.href = '/dashboard';
-    });
+    if (message) {
+        fetch(`/api/request/${request_id}/match`, {
+            method: 'POST',
+            cache: 'no-cache',
+            credentials: 'same-origin',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+            },
+            body: JSON.stringify({
+                respondent_request_id: respondent_request_id,
+                message: message,
+            }),
+        })
+            .then(res => res.json)
+            .then(response => {
+                window.alert('Your message was sent!');
+                window.location.href = '/dashboard';
+            });
+    } else {
+        console.log('Message cancelled.');
+    }
+
 }
 
 const sendAccept = evt => {
