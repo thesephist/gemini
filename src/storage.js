@@ -46,10 +46,7 @@ class JSONStorage {
             } catch (e) {
                 console.error(`Error while reading JSON database`, e);
                 console.log('JSON dump:', dbContents);
-                console.log('Rebuilding JSON database');
-                fs.writeFile(this.path, '{}', 'utf8', err => {
-                    if (err) console.error(err);
-                });
+                throw new Error('Please remedy any issues with the JSON database and restart the server')
             }
         }
     }
