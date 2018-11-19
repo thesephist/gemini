@@ -6,20 +6,22 @@ Studybuddy Prototype.
 
 ### Business logic
 
+- Log out button
+- Update the button on the front page to not take an email field
+- Disallow creating two requests at the same time (for now) at the model level
+- Temporarily add functionality to remove the current request and make a new one
+- When attempting to send a match request to a request that has already requested a match, don't double-send
+- Persist session token records in db/sessions.json
+
 - Make tutor a special level of proficiency, and give them a badge that's "Verified tutor"
 - Put verified tutors on the top of the list in search in a separate subsection
 - Add a section to the landing page that calls out tutors to sign up.
 - Profiles should have a year and major
-- Update screenshots on the landing page to be actually screenshots, not renders.
-- Log out button
 
 ### Usability / bug
 
-- Update the button on the front page to not take an email field
 - Profile view
-- Disallow creating two requests at the same time (for now) at the model level
-- Temporarily add functionality to remove the current request and make a new one
-- When attempting to send a match request to a request that has already requested a match, don't double-send
+- Update screenshots on the landing page to be actually screenshots, not renders.
 - Make the proficiency level on the signup page a slider input
 
 ### Technical
