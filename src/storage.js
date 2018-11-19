@@ -303,26 +303,31 @@ class User extends StoredObject {
     createRequest(course, proficiency, reason) {
         const existingRequest = Request.where({
             user_id: this.id,
-            course: course,
+            // NOTE: this is a temporary fix that disallows
+            //  the creation of multiple Requests per user
+            //  at the ORM level.
+            // course: course,
         });
+        let request;
         if (existingRequest.length > 0) {
-            const request = existingRequest[0];
-            request.setAttributes({
-                proficiency,
-                reason,
-            });
-            request.save();
-            return request;
+            request = existingRequest[0];
+            // NOTE: this statement is same as above NOTE
+            if (request.get('course') === course) {
+                request.setAttributes({
+                    proficiency,
+                    reason,
+                });
+            }
         } else {
-            const request = new Request({
+            request = new Request({
                 user_id: this.id,
                 course,
                 proficiency,
                 reason,
             });
-            request.save();
-            return request;
         }
+        request.save();
+        return request;
     }
 
     notify(subject, message) {
