@@ -25,7 +25,7 @@ const createRequest = () => {
         body: JSON.stringify({
             course,
             proficiency,
-            reason.trim(),
+            reason: reason.trim(),
         }),
     })
     .then(res => res.json)
