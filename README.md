@@ -6,7 +6,6 @@ Studybuddy Prototype.
 
 ### Business logic
 
-- Log out button
 - Update the button on the front page to not take an email field
 - Disallow creating two requests at the same time (for now) at the model level
 - Temporarily add functionality to remove the current request and make a new one

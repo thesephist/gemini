@@ -31,7 +31,9 @@ const render = (current_user, {
       <nav>
         ${current_user === false ? (
             '<a href="/signup" class="signupLink">sign up</a>'
-        ) : ''}
+        ) : (
+            `<a href="/logout" class="logoutButton">log out</a>`
+        )}
         <a href="/faq">faq</a>
         <a href="/contact">contact</a>
       </nav>
