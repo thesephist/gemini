@@ -53,12 +53,19 @@ app.get(secrets.AUTH_REDIRECT_URL,
         failureRedirect: '/'
     }),
     (req, res) => {
+        const userEmail = req.user.emails[0].value;
+
+        if (!userEmail.includes('@berkeley.edu')) {
+            res.redirect(302, '/non-berkeley');
+            return;
+        }
+
         if (getCurrentUser(req) === false) {
             const user = new User({
                 name: req.user.displayName,
-                email: req.user.emails[0].value,
+                email: userEmail,
                 google_id: req.user.id,
-                // photo_url: req.photos[0].value,
+                photo_url: req.photos[0] && req.photos[0].value,
             });
             user.save();
         }
@@ -96,6 +103,7 @@ const STATIC_PATHS = {
     '/faq': 'faq.html',
     '/privacy': 'privacy.html',
     '/tos': 'tos.html',
+    '/non-berkeley': 'non-berkeley.html',
 }
 const respondWith = (res, static_path) => {
     fs.readFile(`static/${static_path}`, 'utf8', (err, data) => {
