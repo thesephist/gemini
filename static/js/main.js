@@ -2,9 +2,9 @@
 const AB_TEST_REPLACEMENTS = {
     // el: [...textContentOptions]
     '.signupButton': [
-        'Sign up',
-        'Start looking',
-        'Find your studybuddy now',
+        // 'Sign Up',
+        // 'Start Looking',
+        'Get Started',
     ],
 };
 

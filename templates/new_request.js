@@ -20,7 +20,7 @@ const render = (current_user) => {
           }
         </select>
       </div>
-      <div class="inputGroup">
+      <div class="inputGroup required">
         <label for="user_level">
           <h2>How are you doing in that class?</h2>
         </label>
@@ -30,7 +30,7 @@ const render = (current_user) => {
           <option value="5">Great, but want to do better</option>
         </select>
       </div>
-      <div class="inputGroup">
+      <div class="inputGroup required">
         <label for="user_topic">
           <h2>What do you want help on? Studying for exams? Homework? Just studying?</h2>
         </label>

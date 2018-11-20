@@ -7,7 +7,6 @@ Studybuddy Prototype.
 ### Business logic
 
 - Temporarily add functionality to remove (read: `close()`) the current request and make a new one
-- Update the button on the front page to not take an email field
 
 Verified tutor program-related
     - Make tutor a special level of proficiency, and give them a badge that's "Verified tutor"

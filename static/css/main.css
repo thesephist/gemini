@@ -276,13 +276,13 @@ button {
     border-radius: 6px;
     width: 100%;
     height: 42px;
-    font-size: 20px;
+    font-size: 22px;
     margin-top: 18px;
     padding-top: 8px;
 }
 
 button:hover {
-    opacity: .7;
+    opacity: .8;
 }
 
 button:hover::after {
@@ -307,6 +307,10 @@ button[disabled]::after {
 button.short::a.inputGroup,
 .questionGroup {
     margin-bottom: 40px;
+}
+
+.inputGroup {
+    margin-top: 32px;
 }
 
 .inputGroup.required h2::after {
