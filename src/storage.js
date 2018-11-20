@@ -398,16 +398,24 @@ class Request extends StoredObject {
     }
 
     getSortedCandidates() {
+        // get all requests for this course
         const candidateRequests = this.constructor.where({
             course: this.get('course'),
         });
 
-        const sortedRequests = sortBy(candidateRequests, req => {
-            return Math.abs(req.get('proficiency') - this.get('proficiency'));
+        // exclude people who already requested matches with this user
+        const excludedRequestIds = [
+            this.id,
+            ...this.getRequestedMatches().map(m => m.get('requester_request_id')),
+        ];
+        const filteredRequests = candidateRequests.filter(r => {
+            return !excludedRequestIds.includes(r.id);
         });
 
-        const copy = sortedRequests.filter(req => req.id === this.id)[0];
-        sortedRequests.splice(sortedRequests.indexOf(copy), 1);
+        // sort by proficiency match
+        const sortedRequests = sortBy(filteredRequests, req => {
+            return Math.abs(req.get('proficiency') - this.get('proficiency'));
+        });
 
         return sortedRequests;
     }
