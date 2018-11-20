@@ -6,11 +6,8 @@ Studybuddy Prototype.
 
 ### Business logic
 
-- Persist session token records in db/sessions.json
-
-- Temporarily add functionality to remove the current request and make a new one
+- Temporarily add functionality to remove (read: `close()`) the current request and make a new one
 - Update the button on the front page to not take an email field
-- Profiles should have a year and major
 
 Verified tutor program-related
     - Make tutor a special level of proficiency, and give them a badge that's "Verified tutor"
@@ -23,6 +20,7 @@ Verified tutor program-related
     - The no-request first login screen on dashboard
     - The new_request page
 - Profile view
+    - Profiles should have a year and major
 - Update screenshots on the landing page to be actually screenshots, not renders.
 - Make the proficiency level on the signup page a slider input
 
@@ -30,6 +28,6 @@ Verified tutor program-related
 
 - Make the contact form work through mailgun, not IFTTT
 - Google Analytics through l7@berkeley.edu
-- speed up `getCurrentUser` in `./src/auth.js` with an in-memory key value store for `user.google_id` -> `user.id`
+- speed up `passport.deserializeUser` in `./src/auth.js` with an in-memory key value store for `user.google_id` -> `user.id`
 - in JSONStorage, revise `async flush()` so it's safe to call multiple times without awaiting previous calls manually
 

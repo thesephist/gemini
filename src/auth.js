@@ -22,41 +22,23 @@ const auth = passport => {
     );
 
     passport.serializeUser((user, done) => {
-        done(null, user);
+        done(null, user.id);
     });
 
-    passport.deserializeUser((user, done) => {
-        done(null, user);
+    passport.deserializeUser((google_id, done) => {
+        const users = User.where({
+            google_id: google_id,
+        });
+        if (users.length === 0) {
+            done(null);
+        } else {
+            done(null, users[0]);
+        }
     });
 
 };
 
-const getCurrentUser = req => {
-    if (secrets.DEVELOPMENT) {
-        return User.all()[0];
-    }
-
-    if (req.user) {
-        const users = User.where({
-            google_id: req.user.id,
-        });
-        if (users.length === 0) {
-            return false;
-        } else {
-            return users[0];
-        }
-    } else {
-        return false;
-    }
-}
-
-const requestAuthentication = res => {
-    res.redirect(302, '/auth');
-}
-
 module.exports = {
     auth,
-    getCurrentUser,
-    requestAuthentication,
 }
 

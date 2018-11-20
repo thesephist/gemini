@@ -17,25 +17,24 @@ const {
     User,
 } = require('./storage.js');
 
-const {
-    auth,
-    getCurrentUser,
-    requestAuthentication,
-} = require('./auth.js');
+const { auth } = require('./auth.js');
 const session = require('express-session');
+const fileStore = require('session-file-store')(session);
+
+// AUTHENTICATION
 app.use(session({
     secret: secrets.COOKIE_KEY,
     resave: false,
     saveUninitialized: true,
+    store: new fileStore({
+        path: config.SESSION_DATABASE,
+    }),
 }));
-
-// AUTHENTICATION
 auth(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 app.get('/auth', (req, res) => {
-    const current_user = getCurrentUser(req);
-    if (current_user !== false) {
+    if (req.user) {
         res.redirect(302, '/dashboard');
     } else {
         res.redirect(302, '/auth/google');
@@ -60,12 +59,12 @@ app.get(secrets.AUTH_REDIRECT_URL,
             return;
         }
 
-        if (getCurrentUser(req) === false) {
+        if (req.user) {
             const user = new User({
                 name: req.user.displayName,
                 email: userEmail,
                 google_id: req.user.id,
-                photo_url: req.photos[0] && req.photos[0].value,
+                photo_url: req.photos && req.photos[0] && req.photos[0].value,
             });
             user.save();
         }
@@ -84,9 +83,7 @@ app.get('/logout', (req, res) => {
 // MAIN PAGE
 app.get('/', (req, res) => {
     try {
-        const current_user = getCurrentUser(req);
-
-        if (current_user === false) {
+        if (!req.user) {
             respondWith(res, 'index.html');
         } else {
             res.redirect(302, '/dashboard');
@@ -143,13 +140,11 @@ const VIEW_PATHS = {
 for (const [uri, renderer] of Object.entries(VIEW_PATHS)) {
     app.get(uri, (req, res) => {
         try {
-            const current_user = getCurrentUser(req);
-
-            if (current_user === false) {
-                requestAuthentication(res);
+            if (!req.user) {
+                res.redirect(302, '/auth');
             } else {
                 res.set('Content-Type', 'text/html');
-                const html = renderer(current_user, req.params);
+                const html = renderer(req.user, req.params);
                 if (html !== false) {
                     res.send(html);
                 } else {
@@ -192,10 +187,8 @@ for (const [spec, handler] of Object.entries(API_PATHS)) {
 
     appMethod(route, (req, res) => {
         try {
-            const current_user = getCurrentUser(req);
-
             res.set('Content-Type', 'application/json');
-            const result = handler(current_user, req.params, req.body);
+            const result = handler(req.user, req.params, req.body);
             res.send(JSON.stringify(result));
         } catch (e) {
             console.error(e);
