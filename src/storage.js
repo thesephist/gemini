@@ -53,8 +53,12 @@ class JSONStorage {
 
     // TODO: revise this so it's safe to call flush() multiple times
     //  in rapid succession -- it should queue up flushes and
-    //  perform them in order using this._flushRequests.
+    //  perform them in order.
     async flush() {
+        return await this._flush();
+    }
+
+    async _flush() {
         try {
             const contents = JSON.stringify(this.inMemoryCopy);
 

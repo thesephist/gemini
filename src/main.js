@@ -132,7 +132,10 @@ console.log('Initialized static paths');
 
 // VIEWS
 const VIEW_PATHS = {
-    '/user/:user_id': views.userView,
+    // NOTE: we aren't using the userView right now, so
+    //  it's being disabled out of an abundance of caution until we can
+    //  secure the view against incorrect email address exposures.
+    // '/user/:user_id': views.userView,
     '/dashboard': views.dashboardView,
     '/new_request': views.newRequestView,
     '/match/:match_id': views.matchView,
