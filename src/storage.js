@@ -286,6 +286,7 @@ class User extends StoredObject {
             email: String,
             availability: Object,
             google_id: String,
+            created_time: Number,
         }
     }
 

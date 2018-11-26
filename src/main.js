@@ -3,6 +3,9 @@ const path = require('path');
 
 const secrets = require('../secrets.js');
 const config = require('../config.js');
+const {
+    now,
+} = require('./utils.js');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -65,6 +68,7 @@ app.get(secrets.AUTH_REDIRECT_URL,
                 email: userEmail,
                 google_id: req.user.id,
                 photo_url: req.photos && req.photos[0] && req.photos[0].value,
+                created_time: now(),
             });
             user.save();
         }
