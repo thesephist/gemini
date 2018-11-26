@@ -2,7 +2,7 @@ const {
     User,
     Request,
     Match,
-} = require('./storage.js');
+} = require('./models.js');
 
 const success = () => {
     return {

@@ -4,7 +4,7 @@ const secrets = require('../secrets.js');
 
 const {
     User,
-} = require('./storage.js');
+} = require('./models.js');
 const {
     now,
 } = require('./utils.js');

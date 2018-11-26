@@ -15,7 +15,7 @@ const api = require('./api.js');
 const views = require('./views.js');
 const {
     User,
-} = require('./storage.js');
+} = require('./models.js');
 
 const { auth } = require('./auth.js');
 const session = require('express-session');

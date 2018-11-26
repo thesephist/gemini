@@ -1,7 +1,7 @@
 const {
     User,
     Match,
-} = require('./storage.js');
+} = require('./models.js');
 
 const headerTemplate = require('../templates/pageheader.js');
 const footerTemplate = require('../templates/pagefooter.js');

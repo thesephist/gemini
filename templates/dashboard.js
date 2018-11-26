@@ -1,7 +1,7 @@
 const {
     User,
     Request,
-} = require('../src/storage.js');
+} = require('../src/models.js');
 
 const matchBox = require('./sections/match.js');
 
