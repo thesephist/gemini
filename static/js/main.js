@@ -17,10 +17,6 @@ const replaceABTestTarget = (query, phrases) => {
     if (el) el.textContent = chooseRandom(phrases);
 }
 
-const validateBerkeleyEmail = address => {
-    return address.match(/.+@berkeley.edu/) !== null;
-}
-
 const validateGenericEmail = address => {
     return address.match(/.+@.+/) !== null;
 }
@@ -81,16 +77,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const sendButton = document.querySelector('.sendButton');
 
     if (signupButton) {
-        const signupInput = document.querySelector('.signupEmail');
         signupButton.addEventListener('click', async () => {
-            const email = signupInput.value;
-            if (validateBerkeleyEmail(email)) {
-                await analytics('Landing page', 'submit', 'Berkeley email');
-                window.location.href = `/signup?email=${email}`;
-            } else {
-                await analytics('Landing page', 'submit', 'non-Berkeley email');
-                window.location.href = `/signup?email=${email}`;
-            }
+            await analytics('Landing page', 'submit');
+            window.location.href = '/signup';
         });
     }
 

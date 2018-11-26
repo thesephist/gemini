@@ -123,7 +123,7 @@ main {
     margin: auto;
     margin-top: var(--header-height);
     padding: 20px;
-    width: 86%;
+    width: 90%;
     max-width: 1100px;
     overflow: hidden;
 }
