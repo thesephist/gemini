@@ -5,6 +5,9 @@ const secrets = require('../secrets.js');
 const {
     User,
 } = require('./storage.js');
+const {
+    now,
+} = require('./utils.js');
 
 const auth = passport => {
 
@@ -16,7 +19,22 @@ const auth = passport => {
                 callbackURL: secrets.AUTH_HOST + secrets.AUTH_REDIRECT_URL,
             },
             (token, refreshToken, profile, done) => {
-                return done(null, profile);
+                const users = User.where({
+                    google_id: profile.id,
+                });
+                if (users.length > 0) {
+                    return done(null, users[0]);
+                } else {
+                    const user = new User({
+                        name: profile.displayName,
+                        email: profile.emails[0].value,
+                        google_id: profile.id,
+                        photo_url: profile.photos && profile.photos[0] && profile.photos[0].value,
+                        created_time: now(),
+                    });
+                    user.save();
+                    return done(null, user);
+                }
             }
         )
     );
@@ -25,15 +43,8 @@ const auth = passport => {
         done(null, user.id);
     });
 
-    passport.deserializeUser((google_id, done) => {
-        const users = User.where({
-            google_id: google_id,
-        });
-        if (users.length === 0) {
-            done(null);
-        } else {
-            done(null, users[0]);
-        }
+    passport.deserializeUser((user_id, done) => {
+        done(null, User.find(user_id) || false);
     });
 
 };

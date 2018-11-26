@@ -3,9 +3,6 @@ const path = require('path');
 
 const secrets = require('../secrets.js');
 const config = require('../config.js');
-const {
-    now,
-} = require('./utils.js');
 
 const express = require('express');
 const bodyParser = require('body-parser');
@@ -55,22 +52,13 @@ app.get(secrets.AUTH_REDIRECT_URL,
         failureRedirect: '/'
     }),
     (req, res) => {
-        const userEmail = req.user.emails[0].value;
-
-        if (!userEmail.includes('@berkeley.edu')) {
-            res.redirect(302, '/non-berkeley');
-            return;
-        }
-
-        if (req.user) {
-            const user = new User({
-                name: req.user.displayName,
-                email: userEmail,
-                google_id: req.user.id,
-                photo_url: req.photos && req.photos[0] && req.photos[0].value,
-                created_time: now(),
+        if (!req.user.get('email').includes('@berkeley.edu')) {
+            req.session.destroy(_ => {
+                req.logout();
+                req.session = null;
+                res.redirect(302, '/non-berkeley');
             });
-            user.save();
+            return;
         }
 
         res.redirect('/dashboard');
