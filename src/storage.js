@@ -408,6 +408,7 @@ class Request extends StoredObject {
         const excludedRequestIds = [
             this.id,
             ...this.getRequestedMatches().map(m => m.get('requester_request_id')),
+            ...this.getAcceptedMatches().map(m => m.get('requester_request_id')),
         ];
         const filteredRequests = candidateRequests.filter(r => {
             return !excludedRequestIds.includes(r.id);

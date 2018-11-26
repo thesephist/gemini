@@ -12,7 +12,6 @@ Studybuddy Prototype.
 - There needs to be smoother lead-in from accepting a request to actually sending an email to them for the first time. _This is the awkwardness barrier. Fix it._
 - If authenticating from an external link, redirect them after auth!
 - It's not super obvious that you wait for an email if you don't find someone on there already. Make it obvious.
-- In the classmates list, exclude the ones that have not only sent the user a message (already done), but also those that are matched fully.
 
 Landing page improvements
 
