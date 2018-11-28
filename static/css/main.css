@@ -433,10 +433,14 @@ h2 {
     flex-shrink: 1;
     flex-grow: 1;
     max-width: calc(100% / var(--items-per-grid) - 16px);
-    background: var(--sb-bg-primary);
+    background: #fff;
     box-shadow: var(--shadow);
     padding: 8px 10px;
     margin: 8px;
+}
+
+.panel .gridItem {
+    background: var(--sb-bg-primary);
 }
 
 @media (max-width: 1000px) {
