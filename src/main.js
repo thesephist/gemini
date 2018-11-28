@@ -26,6 +26,9 @@ app.use(session({
     secret: secrets.COOKIE_KEY,
     resave: false,
     saveUninitialized: true,
+    cookie: {
+        maxAge: 86400 * 365,
+    },
     store: new fileStore({
         path: config.SESSION_DATABASE,
     }),
