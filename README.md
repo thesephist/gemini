@@ -33,7 +33,6 @@ Verified tutor program-related
 ### Technical
 
 - Make the contact form work through mailgun, not IFTTT
-- Google Analytics through l7@berkeley.edu
 - speed up `passport.deserializeUser` in `./src/auth.js` with an in-memory key value store for `user.google_id` -> `user.id`
 - in JSONStorage, revise `async flush()` so it's safe to call multiple times without awaiting previous calls manually
 
