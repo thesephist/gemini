@@ -12,10 +12,15 @@ const COURSES = {
     compsci_61b: 'CS 61B',
     compsci_70: 'CS 70',
 
+    eleceng_16a: 'EE 16A',
+    eleceng_16b: 'EE 16B',
+
     math_1a: 'MATH 1A',
     math_1b: 'MATH 1B',
     math_10a: 'MATH 10A',
     math_10b: 'MATH 10B',
+    math_54: 'MATH 54',
+    math_55: 'MATH 55',
 
     chem_1a: 'CHEM 1A',
     chem_1b: 'CHEM 1B',
