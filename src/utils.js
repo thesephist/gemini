@@ -8,6 +8,7 @@ const makeAvailability = () => {
 
 const COURSES = {
     compsci_8: 'CS C8 / Data 8',
+    compsci_10: 'CS 10',
     compsci_61a: 'CS 61A',
     compsci_61b: 'CS 61B',
     compsci_70: 'CS 70',
