@@ -8,9 +8,15 @@ const render = (current_user, {
 
     return `
       ${requesterIsCurrentUser ? (
-        `<h1>Match with ${otherUser.get('name')}</h1>`
+          `
+          <h1>Match with ${otherUser.get('name')}</h1>
+          <p>Click on the email below to start the conversation!</p>
+          `
       ) : (
-        `<h1>Request from ${otherUser.get('name')}</h1>`
+          `
+          <h1>Request from ${otherUser.get('name')}</h1>
+          <p>Accept the request to see ${otherUser.get('name')}'s contact information, and start a conversation!</p>
+          `
       )}
 
       ${matchBox(current_user, match)}

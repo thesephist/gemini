@@ -39,7 +39,8 @@ const render = (current_user) => {
           <h2 class="pageSub">${current_user.get('name')} | ${current_user.get('email')}</h2>
 
           <div class="currentRequest panel">
-              <div>You're looking for a Studybuddy for <strong>${course}</strong> to work on <strong>${req.get('reason')}</strong>.</div>
+              <p>You're looking for a Studybuddy for <strong>${course}</strong> to work on <strong>${req.get('reason')}</strong>.</p>
+              <p>Start by messaging some classmates below, or you can wait for someone else to message you first. When a classmate sends you a message, you'll see it forwarded to your email inbox.</p>
           </div>
 
           <div class="accepted panel">

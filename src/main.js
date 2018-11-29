@@ -64,7 +64,13 @@ app.get(secrets.AUTH_REDIRECT_URL,
             return;
         }
 
-        res.redirect('/dashboard');
+        if (req.session.returnTo) {
+            const redirect = req.session.returnTo;
+            delete req.session.returnTo;
+            res.redirect(redirect);
+        } else {
+            res.redirect('/dashboard');
+        }
     }
 );
 app.get('/logout', (req, res) => {
@@ -136,8 +142,15 @@ for (const [uri, renderer] of Object.entries(VIEW_PATHS)) {
     app.get(uri, (req, res) => {
         try {
             if (!req.user) {
+                req.session.returnTo = req.originalUrl;
                 res.redirect(302, '/auth');
             } else {
+                // FIXME make this more elegant later
+                if (uri == '/dashboard' && req.user.getOpenRequests().length == 0) {
+                    res.redirect('/new_request');
+                    return;
+                }
+
                 res.set('Content-Type', 'text/html');
                 const html = renderer(req.user, req.params);
                 if (html !== false) {

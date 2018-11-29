@@ -33,7 +33,7 @@ h1,
 h2,
 h3,
 p {
-    line-height: 1.4em;
+    line-height: 1.5em;
 }
 
 /* CSS VARS */
@@ -237,10 +237,6 @@ section {
     margin: 32px 0;
 }
 
-h1 {
-    margin-top: 32px;
-}
-
 h1 em {
     color: var(--sb-dark-primary);
     font-style: normal;
@@ -320,7 +316,7 @@ button.short::a.inputGroup,
 }
 
 p {
-    font-size: 18px;
+    font-size: 20px;
     margin: 24px 0;
 }
 
@@ -540,6 +536,10 @@ h2 {
 }
 
 @media (max-width: 800px) {
+    p {
+        font-size: 18px;
+    }
+
     .videoThumbs {
         display: none;
     }

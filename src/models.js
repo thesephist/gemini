@@ -305,6 +305,13 @@ class User extends StoredObject {
         ];
     }
 
+    getOpenRequests() {
+        return Request.where({
+            user_id: this.id,
+            closed: false,
+        });
+    }
+
     createRequest(course, proficiency, reason) {
         const existingRequest = Request.where({
             user_id: this.id,
@@ -452,7 +459,7 @@ class Request extends StoredObject {
                 <p>${message}</p>
                 <hr/>
                 <p>${this.user.get('name')} wants to work on: ${this.get('reason')}</p>
-                <p><a href="${secrets.AUTH_HOST}/match/${match.id}">Click here</a> to respond on Studybuddy!</p>`,
+                <p><a href="${secrets.AUTH_HOST}/match/${match.id}">Click here</a> to respond on Studybuddy! (Direct responses to this email won't reach ${this.user.get('name')}.)</p>`,
             );
         }
 
