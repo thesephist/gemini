@@ -6,6 +6,7 @@ Studybuddy Prototype.
 
 ### Business logic
 
+- Add functionality to mark one's request as "closed", if you've already found the right partners. Otherwise the top people will get all the messages.
 - Give users the ability to create new "courses" in the database that'll then autocomplete for other students. Not having all the courses is really creating a bottleneck.
 - Have a view that shows everyone that's looking for studybuddies and show it when no requests are visible and on the first login screen. This will help it feel less desolate. Also, remove the test users me #2 and Divyansh fake divyansh.
 - On the landing page, the key call to action next to sign up should be lower barrier: have a view of everyone that's looking for studybuddies, filterable by subject. (`/list?filter=<course>`) If not logged in, the "message" button should go to the google OAuth screen.
@@ -24,7 +25,6 @@ Verified tutor program-related
 
 ### Usability / bug
 
-- Temporarily add functionality to remove (read: `close()`) the current request and make a new one
 - Fix design issues
     - The no-request first login screen on dashboard
 - Profile view
