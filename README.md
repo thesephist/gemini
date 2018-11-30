@@ -33,6 +33,7 @@ Verified tutor program-related
 
 ### Technical
 
+- Add ability for view renderers to respond with HTTP response code and redirect options instead of simply `false`.
 - Make the contact form work through mailgun, not IFTTT
 - speed up `passport.deserializeUser` in `./src/auth.js` with an in-memory key value store for `user.google_id` -> `user.id`
 - in JSONStorage, revise `async flush()` so it's safe to call multiple times without awaiting previous calls manually

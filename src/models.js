@@ -11,6 +11,7 @@ const {
 
 const {
     now,
+    ADMINS,
 } = require('./utils.js');
 
 const secrets = require('../secrets.js');
@@ -303,6 +304,10 @@ class User extends StoredObject {
         return [
             'availability',
         ];
+    }
+
+    isAdmin() {
+        return ADMINS.includes(this.get('email'));
     }
 
     getOpenRequests() {

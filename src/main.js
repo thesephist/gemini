@@ -135,6 +135,7 @@ const VIEW_PATHS = {
     //  secure the view against incorrect email address exposures.
     // '/user/:user_id': views.userView,
     '/dashboard': views.dashboardView,
+    '/admin': views.adminView,
     '/new_request': views.newRequestView,
     '/match/:match_id': views.matchView,
 }

@@ -37,14 +37,21 @@ const COURSES = {
     phys_7a: 'PHYS 7A',
     phys_7b: 'PHYS 7B',
 }
+
 const courseFromSlug = slug => {
     return COURSES[slug] || 'Invalid course';
 }
+
+const ADMINS = [
+    'l7@berkeley.edu',
+    'divsaksena@berkeley.edu',
+];
 
 module.exports = {
     now,
     makeAvailability,
     COURSES,
     courseFromSlug,
+    ADMINS,
 }
 

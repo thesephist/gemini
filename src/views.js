@@ -10,6 +10,7 @@ const userTemplate = require('../templates/user.js');
 const matchTemplate = require('../templates/match.js');
 const dashboardTemplate = require('../templates/dashboard.js');
 const newRequestTemplate = require('../templates/new_request.js');
+const adminTemplate = require('../templates/admin.js');
 
 const config = require('../config.js');
 
@@ -81,10 +82,25 @@ const newRequestView = (current_user) => {
     );
 }
 
+const adminView = (current_user) => {
+    if (current_user.isAdmin()) {
+        const innerPage = adminTemplate(current_user);
+
+        return renderFullPage(
+            current_user,
+            `Admin | Studybuddy`,
+            innerPage
+        );
+    } else {
+        return false;
+    }
+}
+
 module.exports = {
     userView,
     dashboardView,
     newRequestView,
     matchView,
+    adminView,
 };
 
