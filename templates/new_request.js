@@ -3,6 +3,18 @@ const {
 } = require('../src/utils.js');
 
 const render = (current_user) => {
+
+    // group courses by department
+    const getDept = courseName => courseName.split(' ')[0];
+    const courseGroups = {};
+    for (const [slug, name] of Object.entries(COURSES)) {
+        const dept = getDept(name);
+        if (!(dept in courseGroups)) {
+            courseGroups[dept] = [];
+        }
+        courseGroups[dept].push([slug, name]);
+    }
+
     return `
       <h1 class="vprop">
         Let's find <em>you</em> a Studybuddy.
@@ -14,8 +26,15 @@ const render = (current_user) => {
         <select name="user_class" id="user_class">
           <option value="" selected>-- Choose one --</option>
           ${
-            Object.entries(COURSES).map(([slug, name]) => {
-                return `<option value="${slug}">${name}</option>`
+            Object.entries(courseGroups).map(([dept, courses]) => {
+                return `
+                    <optgroup label="${dept}">
+                    ${
+                    courses.map(([slug, name]) =>
+                        `<option value="${slug}">${name}</option>`).join('')
+                    }
+                    </optgroup>
+                `;
             }).join('\n')
           }
         </select>
