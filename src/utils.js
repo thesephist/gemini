@@ -24,6 +24,11 @@ const COURSES = {
     math_16b: 'MATH 16B',
     math_54: 'MATH 54',
     math_55: 'MATH 55',
+    math_104: 'MATH 104',
+    math_110: 'MATH 110',
+    math_113: 'MATH 113',
+    math_128A: 'MATH 128A',
+    math_185: 'MATH 185',
 
     astro_c10: 'ASTRO C10',
     econ_1: 'ECON 1',
