@@ -33,6 +33,7 @@ Studybuddy is still in the alpha phase, and is more a proof of concept and less 
 ### Usability / bug
 
 - Make the proficiency level on the signup page a slider input
+- Ability to use phone number as contact that shows up when accepted, in addition to email.
 
 ### Technical
 
