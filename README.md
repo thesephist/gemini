@@ -4,14 +4,16 @@ Studybuddy is still in the alpha phase, and is more a proof of concept and less 
 
 ## TODOs
 
-### Business logic
+### Business logic (in order of priority)
 
-- Add functionality to mark one's request as "closed", if you've already found the right partners. Otherwise the top people will get all the messages.
+- Add `User.available_times` and `User.available_locations` (both user input strings) and ask then on `/new_request` as optional.
+  - Show on `matchbox` view.
 - Give users the ability to create new "courses" in the database that'll then autocomplete for other students. Not having all the courses is really creating a bottleneck.
-- Have a view that shows everyone that's looking for studybuddies and show it when no requests are visible and on the first login screen. This will help it feel less desolate. Also, remove the test users me #2 and Divyansh fake divyansh.
-- On profile, ability to specify when they're available and where they can meet. Show in `matchbox` views. Also year and major.
+- Add functionality to mark one's request as "closed", if you've already found the right partners. Otherwise the top people will get all the messages.
 - As a footer of all the emails we send, link to `/contact` and ask for feedback / improvements / class suggestions.
 - On landing page show "X Berkeley students looking for studybuddies in (top courses list)".
+- Have a view that shows everyone that's looking for studybuddies and show it when no requests are visible and on the first login screen. This will help it feel less desolate. Also, remove the test users me #2 and Divyansh fake divyansh.
+- Short, 140-character bio per profile.
 
 ### Landing page improvements
 
