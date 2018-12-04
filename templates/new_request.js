@@ -41,7 +41,7 @@ const render = (current_user) => {
       </div>
       <div class="inputGroup required">
         <label for="user_level">
-          <h2>How are you doing in that class?</h2>
+          <h2>How are you doing in that class? (This won't be shown to anyone else.)</h2>
         </label>
         <select name="user_level" id="user_level">
           <option value="1">I'm lost, and I need help</option>
@@ -51,7 +51,7 @@ const render = (current_user) => {
       </div>
       <div class="inputGroup required">
         <label for="user_topic">
-          <h2>What do you want help on? Studying for exams? Homework? Just studying?</h2>
+          <h2>What do you want to work on? Studying for finals? Homework or projects? Any specific challenging topics?</h2>
         </label>
         <input type="text" name="user_topic">
       </div>
