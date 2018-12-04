@@ -39,9 +39,9 @@ const render = (current_user) => {
 
     <p><strong>${User.all().length}</strong> Users Signed Up, <strong>${User.all().filter(u => u.get('email').includes('berkeley')).length}</strong> Registered berkeley.edu emails</p>
 
-    <h3>List of all users (non-berkeley are greyed out)</h3>
+    <h3>List of all users (newest first, non-berkeley are greyed out)</h3>
     <ol>
-        ${sortBy(User.all(), 'created_time').map(u => {
+        ${sortBy(User.all(), 'created_time').reverse().map(u => {
             const created_time = u.get('created_time') ? (
                 new Date(u.get('created_time') * 1000).toISOString().substr(0, 10)
             ) : 'unknown';
@@ -73,9 +73,9 @@ const render = (current_user) => {
         }).join('')}
     </ol>
 
-    <h3>List of all requests</h3>
+    <h3>List of all requests (newest first)</h3>
     <ol>
-        ${sortBy(Request.all(), 'created_time').sort().map(r => {
+        ${sortBy(Request.all(), 'created_time').reverse().map(r => {
             return `
                 <li>
                     <strong>${User.find(r.get('user_id')).get('name')}</strong>:
@@ -96,9 +96,9 @@ const render = (current_user) => {
         <strong>${Match.all().filter(m => m.get('accepted') === true).length}</strong> accepted messages (pairs formed)
     </p>
 
-    <h3>List of all messages sent (⏳ waiting | ✅ accepted | 🛑 declined)</h3>
+    <h3>List of all messages sent (newest first, ⏳ waiting | ✅ accepted | 🛑 declined)</h3>
     <ol>
-        ${sortBy(Match.all(), 'created_time').map(m => {
+        ${sortBy(Match.all(), 'created_time').reverse().map(m => {
             let response = '⏳';
             if (m.get('accepted') === true) {
                 response = '✅';
