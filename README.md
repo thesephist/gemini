@@ -2,7 +2,7 @@
 
 Studybuddy helps university students find classmates to study with.
 
-![Studybuddy Screenshot](https://github.com/thesephist/gemini/doc/img/screenshot.png)
+![Studybuddy Screenshot](doc/img/screenshot.png)
 
 Studybuddy is still in the alpha phase, and is more a proof of concept and less a production app. Lots of things are not scalable, and lots of things are changing pretty rapidly (including the database schema, which is why we roll custom for now).
 
