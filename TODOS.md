@@ -2,6 +2,7 @@
 
 ## Business logic (in order of priority)
 
+- Suggested matches / studybuddies -- send emails to them! A `Suggestion` is a new model, with a column for `notification_sent` timestamp, a request_id, suggested_request_id.
 - Add `User.available_times` and `User.available_locations` (both user input strings) and ask then on `/new_request` as optional.
   - Show on `matchbox` view.
 - Give users the ability to create new "courses" in the database that'll then autocomplete for other students. Not having all the courses is really creating a bottleneck.
