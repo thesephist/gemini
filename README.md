@@ -54,4 +54,3 @@ The app should persist database data to `/db/db.json` and session data to `/db/s
 If you'd like to contribute new features, file bugs, or implement some of the TODO features above, please fele free to put in a PR or file an issue!
 
 TODOs and planned features and bugfixes can be found at `TODOS.md`.
-
