@@ -22,9 +22,7 @@ const emptyMessage = message => {
 const render = (current_user) => {
 
     // one request per user for now
-    const requests = Request.where({
-        user_id: current_user.id,
-    });
+    const requests = current_user.getOpenRequests();
 
     if (requests.length > 0) {
         const req = requests[0];
@@ -39,8 +37,8 @@ const render = (current_user) => {
           <h2 class="pageSub">${current_user.get('name')} | ${current_user.get('email')}</h2>
 
           <div class="currentRequest panel">
-              <p>You're looking for a Studybuddy for <strong>${course}</strong> to work on <strong>${req.get('reason')}</strong>.</p>
-              <p>Start by messaging some classmates below, or you can wait for someone else to message you first. When a classmate sends you a message, you'll see it forwarded to your email inbox.</p>
+              <p>This semester, you're looking for a Studybuddy for <strong>${course}</strong> to work on <strong>${req.get('reason')}</strong>.</p>
+              <p>Start by messaging your classmates below! When another classmate sends you a message, you'll see it forwarded to your email inbox.</p>
           </div>
 
           <div class="accepted panel">
@@ -112,4 +110,3 @@ const candidateBox = (current_user, user, myRequest, otherRequest) => {
 }
 
 module.exports = render;
-

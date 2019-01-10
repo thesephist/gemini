@@ -5,5 +5,6 @@ module.exports = {
     DATABASE: 'db/db.json',
     SESSION_DATABASE: 'db/sessions/',
 
-}
+    SEMESTER: 'sp19',
 
+}

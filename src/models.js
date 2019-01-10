@@ -314,17 +314,16 @@ class User extends StoredObject {
         return Request.where({
             user_id: this.id,
             closed: false,
+            semester: config.SEMESTER,
         });
     }
 
     createRequest(course, proficiency, reason) {
-        const existingRequest = Request.where({
-            user_id: this.id,
-            // NOTE: this is a temporary fix that disallows
-            //  the creation of multiple Requests per user
-            //  at the ORM level.
-            // course: course,
-        });
+        // NOTE: this is a temporary fix that disallows
+        //  the creation of multiple Requests per user
+        //  at the ORM level.
+        // course: course,
+        const existingRequest = this.getOpenRequests();
         let request;
         if (existingRequest.length > 0) {
             request = existingRequest[0];
@@ -378,6 +377,7 @@ class Request extends StoredObject {
             proficiency: 0,
             reason: '',
             closed: false,
+            semester: config.SEMESTER, // change every semester
         }
     }
 
@@ -414,6 +414,7 @@ class Request extends StoredObject {
         // get all requests for this course
         const candidateRequests = this.constructor.where({
             course: this.get('course'),
+            closed: false,
         });
 
         // exclude people who already requested matches with this user
@@ -573,4 +574,3 @@ module.exports = {
     Match,
     flush: async () => await db.flush(),
 };
-

@@ -11,6 +11,8 @@ const {
 
 const sortBy = require('lodash.sortby');
 
+const config = require('../config.js');
+
 const render = (current_user) => {
     return `
     <style>
@@ -60,11 +62,12 @@ const render = (current_user) => {
 
     <h2>Requests (Users that have listed for classes)</h2>
 
-    <p><strong>${Request.all().length}</strong> Users Listed for a Class</p>
+    <p><strong>${Request.where({ semester: config.SEMESTER }).length}</strong> Users Listed for a Class in
+        <strong>${config.SEMESTER}</strong> (${Request.all().length} total)</p>
 
-    <h3>Courses by popularity</h3>
+    <h3>Courses by popularity this semester</h3>
     <ol>
-        ${sortBy(Object.keys(COURSES), c => -Request.where({course: c}).length).map(courseSlug => {
+        ${sortBy(Object.keys(COURSES), c => -Request.where({course: c, semester: config.SEMESTER}).length).map(courseSlug => {
             return `
                 <li>
                     <strong>${courseFromSlug(courseSlug)}</strong>: ${Request.where({course: courseSlug}).length} students
@@ -73,9 +76,9 @@ const render = (current_user) => {
         }).join('')}
     </ol>
 
-    <h3>List of all requests (newest first)</h3>
+    <h3>List of all requests in ${config.SEMESTER} (newest first)</h3>
     <ol>
-        ${sortBy(Request.all(), 'created_time').reverse().map(r => {
+        ${sortBy(Request.where({semester: config.SEMESTER}), 'created_time').reverse().map(r => {
             return `
                 <li>
                     <strong>${User.find(r.get('user_id')).get('name')}</strong>:
@@ -96,7 +99,7 @@ const render = (current_user) => {
         <strong>${Match.all().filter(m => m.get('accepted') === true).length}</strong> accepted messages (pairs formed)
     </p>
 
-    <h3>List of all messages sent (newest first, ⏳ waiting | ✅ accepted | 🛑 declined)</h3>
+    <h3>List of all messages sent (all semesters, newest first, ⏳ waiting | ✅ accepted | 🛑 declined)</h3>
     <ol>
         ${sortBy(Match.all(), 'created_time').reverse().map(m => {
             let response = '⏳';
@@ -121,4 +124,3 @@ const render = (current_user) => {
 }
 
 module.exports = render;
-
