@@ -27,7 +27,7 @@ app.use(session({
     resave: false,
     saveUninitialized: true,
     cookie: {
-        maxAge: 86400 * 365,
+        maxAge: 86400 * 30 * 1000,
     },
     store: new fileStore({
         path: config.SESSION_DATABASE,
