@@ -17,6 +17,7 @@ const auth = passport => {
                 clientID: secrets.CLIENT_ID,
                 clientSecret: secrets.CLIENT_SECRET,
                 callbackURL: secrets.AUTH_HOST + secrets.AUTH_REDIRECT_URL,
+                userProfileURL: 'https://www.googleapis.com/oauth2/v3/userinfo',
             },
             (token, refreshToken, profile, done) => {
                 const users = User.where({
