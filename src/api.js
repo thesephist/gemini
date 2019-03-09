@@ -77,6 +77,30 @@ api.request.close = (current_user, params) => {
     }
 }
 
+api.request.open_current = (current_user, params) => {
+    const requests = current_user.getCurrentRequests();
+    if (requests.length > 0) {
+        const request = requests[0];
+        request.set('closed', false);
+        request.save();
+        return request.toJSON();
+    } else {
+        return error(`Could not find a current request for ${current_user.id}`)
+    }
+}
+
+api.request.close_current = (current_user, params) => {
+    const requests = current_user.getCurrentRequests();
+    if (requests.length > 0) {
+        const request = requests[0];
+        request.set('closed', true);
+        request.save();
+        return request.toJSON();
+    } else {
+        return error(`Could not find a current request for ${current_user.id}`)
+    }
+}
+
 // MATCH
 
 api.match.get = (current_user, params) => {

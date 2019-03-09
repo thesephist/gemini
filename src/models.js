@@ -310,10 +310,9 @@ class User extends StoredObject {
         return ADMINS.includes(this.get('email'));
     }
 
-    getOpenRequests() {
+    getCurrentRequests() {
         return Request.where({
             user_id: this.id,
-            closed: false,
             semester: config.SEMESTER,
         });
     }
@@ -323,7 +322,7 @@ class User extends StoredObject {
         //  the creation of multiple Requests per user
         //  at the ORM level.
         // course: course,
-        const existingRequest = this.getOpenRequests();
+        const existingRequest = this.getCurrentRequests();
         let request;
         if (existingRequest.length > 0) {
             request = existingRequest[0];

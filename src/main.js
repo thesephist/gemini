@@ -147,7 +147,7 @@ for (const [uri, renderer] of Object.entries(VIEW_PATHS)) {
                 res.redirect(302, '/auth');
             } else {
                 // FIXME make this more elegant later
-                if (uri == '/dashboard' && req.user.getOpenRequests().length == 0) {
+                if (uri == '/dashboard' && req.user.getCurrentRequests().length == 0) {
                     res.redirect('/new_request');
                     return;
                 }
@@ -172,6 +172,9 @@ console.log('Initialized view paths');
 // API
 const API_PATHS = {
     'GET /api/user/:user_id': api.user.get,
+
+    'POST /api/close_current_request': api.request.close_current,
+    'POST /api/open_current_request': api.request.open_current,
 
     'GET /api/request/:request_id': api.request.get,
     'POST /api/request': api.request.create,

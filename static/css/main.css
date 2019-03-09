@@ -1,4 +1,5 @@
 /* RESETS */
+
 html,
 body,
 img,
@@ -48,7 +49,7 @@ body {
     --sb-negative: #da4669;
 
     --header-height: 80px;
-    --shadow: 0 5px 20px -3px rgba(0, 0, 0, .3);
+    --shadow: 0 3px 5px -1px rgba(0, 0, 0, .3);
 }
 
 body,
@@ -459,7 +460,8 @@ h2 {
     align-items: center;
     font-weight: bold;
     color: #aaa;
-    font-size: 2em;
+    font-size: 1.6em;
+    text-align: center;
 }
 
 .buttonSet {
@@ -573,5 +575,12 @@ h2 {
         transform: scale(1) perspective(1400px) rotateY(-20deg) rotateX(9deg) translateX(30px);
     }
 
+}
+
+.closeRequestButton,
+.openRequestButton {
+    width: auto;
+    padding-left: 28px;
+    padding-right: 28px;
 }
 

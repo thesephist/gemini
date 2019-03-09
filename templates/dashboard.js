@@ -22,7 +22,7 @@ const emptyMessage = message => {
 const render = (current_user) => {
 
     // one request per user for now
-    const requests = current_user.getOpenRequests();
+    const requests = current_user.getCurrentRequests();
 
     if (requests.length > 0) {
         const req = requests[0];
@@ -32,13 +32,34 @@ const render = (current_user) => {
         const requestedMatches = req.getRequestedMatches();
         const candidates = req.getSortedCandidates();
 
+        let candidatesPanelContents = '';
+        if (req.get('closed')) {
+            candidatesPanelContents = emptyMessage(`You're currently invisible to your classmates. To send studybuddy requests, become visible again.`);
+        } else if (candidates.length > 0) {
+            candidatesPanelContents = candidates.map(request => candidateBox(current_user, request.user, req, request)).join('\n')
+        } else {
+            candidatesPanelContents = emptyMessage('Nobody from your course is here yet. Invite them to join!')
+        }
+
         return `
           <h1>Studybuddy <em>dashboard</em></h1>
           <h2 class="pageSub">${current_user.get('name')} | ${current_user.get('email')}</h2>
 
           <div class="currentRequest panel">
-              <p>This semester, you're looking for a Studybuddy for <strong>${course}</strong> to work on <strong>${req.get('reason')}</strong>.</p>
+              <p>This semester, you're looking for a Studybuddy for <strong>${course}</strong> to work on: <strong>${req.get('reason')}</strong>.</p>
               <p>Start by messaging your classmates below! When another classmate sends you a message, you'll see it forwarded to your email inbox.</p>
+              <hr/>
+              ${req.get('closed') ? (
+                  `
+                  <p>You're currently <strong>hidden from classmates</strong>. Become visible to your classmates to send and receive studybuddy requests.</p>
+                  <button class="openRequestButton">Become visible</button>
+                  `
+              ) : (
+                  `
+                  <p>You're currently <strong>visible to your classmates</strong>. If you've found enough studybuddies, you can go invisible to prevent other classmates from sending you more requests.</p>
+                  <button class="closeRequestButton">Go invisible</button>
+                  `
+              )}
           </div>
 
           <div class="accepted panel">
@@ -68,11 +89,7 @@ const render = (current_user) => {
           <div class="candidates panel">
             <H2>Your other classmates in ${course}</h2>
             <div class="grid">
-              ${candidates.length ? (
-                  candidates.map(request => candidateBox(current_user, request.user, req, request)).join('\n')
-              ) : (
-                  emptyMessage('Nobody from your course is here yet. Invite them to join!')
-              )}
+              ${candidatesPanelContents}
             </div>
           </div>
 
