@@ -463,7 +463,7 @@ class Request extends StoredObject {
                 `
                 <p>${message}</p>
                 <hr/>
-                <p>${this.user.get('name')} wants to work on: ${this.get('reason')}</p>
+                <p>${this.user.get('name')} wants to work on: <strong>${this.get('reason')}</strong></p>
                 <p><a href="${secrets.AUTH_HOST}/match/${match.id}">Click here</a> to respond on Studybuddy! (Direct responses to this email won't reach ${this.user.get('name')}.)</p>`,
             );
         }
@@ -559,7 +559,7 @@ class Match extends StoredObject {
             `${respondent.get('name')} declined your Studybuddy request`,
             `
             <p><strong>${respondent.get('name')}</strong> declined your Studybuddy request.</p>
-            <p><a href="${secrets.AUTH_HOST}/dashboard?source=decline">Click here</a> to find more students.</p>
+            <p><a href="${secrets.AUTH_HOST}/dashboard?source=decline">Click here</a> to find more classmates.</p>
             `
         );
     }

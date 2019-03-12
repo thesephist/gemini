@@ -7,13 +7,20 @@ const mg = mailgun.client({
     key: secrets.MG_API_KEY,
 });
 
+const EMAIL_FOOTER = `
+<p>Have questions or feedback about Studybuddy? Let us know <a href="https://getstudybuddy.com/contact">here</a>, we're all ears!</p>
+`;
+
 const notify = (target_user, subject, message) => {
+
+    const body = message + EMAIL_FOOTER;
+
     if (secrets.DEVELOPMENT) {
         return console.log(
             'NOTIFY:',
             target_user.get('email'),
             subject,
-            message
+            body,
         );
     }
 
@@ -21,8 +28,8 @@ const notify = (target_user, subject, message) => {
         from: 'Studybuddy <notify@getstudybuddy.com>',
         to: [target_user.get('email')],
         subject: subject,
-        text: message,
-        html: message,
+        text: body,
+        html: body,
     })
     .then(msg => console.log(msg))
     .catch(err => console.error(err));
