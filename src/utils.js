@@ -11,6 +11,7 @@ const COURSES = {
     compsci_10: 'CS 10',
     compsci_61a: 'CS 61A',
     compsci_61b: 'CS 61B',
+    compsci_61c: 'CS 61C',
     compsci_70: 'CS 70',
 
     eleceng_16a: 'EE 16A',
@@ -36,6 +37,8 @@ const COURSES = {
     espm_10: 'ESPM 10',
     ls_25: 'L&S 25',
 
+    stat_140: 'STAT 140',
+
     chem_1a: 'CHEM 1A',
     chem_1b: 'CHEM 1B',
 
@@ -49,7 +52,7 @@ const courseFromSlug = slug => {
 
 const ADMINS = [
     'l7@berkeley.edu',
-    'divsaksena@berkeley.edu',
+    // 'divsaksena@berkeley.edu',
 ];
 
 module.exports = {
