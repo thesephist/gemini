@@ -70,7 +70,7 @@ const render = (current_user) => {
         ${sortBy(Object.keys(COURSES), c => -Request.where({course: c, semester: config.SEMESTER}).length).map(courseSlug => {
             return `
                 <li>
-                    <strong>${courseFromSlug(courseSlug)}</strong>: ${Request.where({course: courseSlug}).length} students
+                    <strong>${courseFromSlug(courseSlug)}</strong>: ${Request.where({course: courseSlug, semester: config.SEMESTER}).length} (${Request.where({course: courseSlug}).length} total students)
                 </li>
             `
         }).join('')}
