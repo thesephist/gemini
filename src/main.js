@@ -102,7 +102,7 @@ app.get('/', (req, res) => {
 
 // STATIC ASSETS
 const STATIC_PATHS = {
-    '/goodbye': 'goodbye.html'
+    '/goodbye': 'goodbye.html',
     '/contact': 'contact.html',
     '/faq': 'faq.html',
     '/privacy': 'privacy.html',
