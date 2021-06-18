@@ -37,49 +37,54 @@ auth(passport);
 app.use(passport.initialize());
 app.use(passport.session());
 app.get('/auth', (req, res) => {
+    // NOTE: deprecated
+    res.redirect(302, '/goodbye');
+    return;
+
     if (req.user) {
         res.redirect(302, '/dashboard');
     } else {
         res.redirect(302, '/auth/google');
     }
-}
-);
-app.get('/auth/google', passport.authenticate('google', {
-    scope: ['email', 'profile'],
-}));
+});
+// NOTE: no auth now that service is disabled
+// app.get('/auth/google', passport.authenticate('google', {
+//     scope: ['email', 'profile'],
+// }));
 app.get('/signup', (req, res) => {
-    res.redirect(302, '/auth');
+    // res.redirect(302, '/auth');
+    res.redirect(302, '/goodbye');
 });
-app.get(secrets.AUTH_REDIRECT_URL,
-    passport.authenticate('google', {
-        failureRedirect: '/'
-    }),
-    (req, res) => {
-        if (!req.user.get('email').includes('@berkeley.edu')) {
-            req.session.destroy(_ => {
-                req.logout();
-                req.session = null;
-                res.redirect(302, '/non-berkeley');
-            });
-            return;
-        }
-
-        if (req.session.returnTo) {
-            const redirect = req.session.returnTo;
-            delete req.session.returnTo;
-            res.redirect(redirect);
-        } else {
-            res.redirect('/dashboard');
-        }
-    }
-);
-app.get('/logout', (req, res) => {
-    req.session.destroy(_ => {
-        req.logout();
-        req.session = null;
-        res.redirect('/');
-    });
-});
+// app.get(secrets.AUTH_REDIRECT_URL,
+//     passport.authenticate('google', {
+//         failureRedirect: '/'
+//     }),
+//     (req, res) => {
+//         if (!req.user.get('email').includes('@berkeley.edu')) {
+//             req.session.destroy(_ => {
+//                 req.logout();
+//                 req.session = null;
+//                 res.redirect(302, '/non-berkeley');
+//             });
+//             return;
+//         }
+//
+//         if (req.session.returnTo) {
+//             const redirect = req.session.returnTo;
+//             delete req.session.returnTo;
+//             res.redirect(redirect);
+//         } else {
+//             res.redirect('/dashboard');
+//         }
+//     }
+// );
+// app.get('/logout', (req, res) => {
+//     req.session.destroy(_ => {
+//         req.logout();
+//         req.session = null;
+//         res.redirect('/');
+//     });
+// });
 
 // MAIN PAGE
 app.get('/', (req, res) => {
@@ -97,10 +102,10 @@ app.get('/', (req, res) => {
 
 // STATIC ASSETS
 const STATIC_PATHS = {
+    '/goodbye': 'goodbye.html'
     '/contact': 'contact.html',
     '/faq': 'faq.html',
     '/privacy': 'privacy.html',
-    '/tos': 'tos.html',
     '/non-berkeley': 'non-berkeley.html',
 }
 const respondWith = (res, static_path) => {
@@ -130,9 +135,9 @@ console.log('Initialized static paths');
 
 // VIEWS
 const VIEW_PATHS = {
-    // NOTE: we aren't using the userView right now, so
-    //  it's being disabled out of an abundance of caution until we can
-    //  secure the view against incorrect email address exposures.
+    // NOTE: we aren't using the userView right now, so it's being disabled out
+    // of an abundance of caution until we can secure the view against
+    // incorrect email address exposures.
     // '/user/:user_id': views.userView,
     '/dashboard': views.dashboardView,
     '/admin': views.adminView,
@@ -141,6 +146,10 @@ const VIEW_PATHS = {
 }
 for (const [uri, renderer] of Object.entries(VIEW_PATHS)) {
     app.get(uri, (req, res) => {
+        // NOTE: deprecated, so redirecting to closing message
+        res.redirect(302, '/goodbye');
+        return;
+
         try {
             if (!req.user) {
                 req.session.returnTo = req.originalUrl;
@@ -171,21 +180,22 @@ console.log('Initialized view paths');
 
 // API
 const API_PATHS = {
-    'GET /api/user/:user_id': api.user.get,
+    // NOTE: API routes are disabled
+    // 'GET /api/user/:user_id': api.user.get,
 
-    'POST /api/close_current_request': api.request.close_current,
-    'POST /api/open_current_request': api.request.open_current,
+    // 'POST /api/close_current_request': api.request.close_current,
+    // 'POST /api/open_current_request': api.request.open_current,
 
-    'GET /api/request/:request_id': api.request.get,
-    'POST /api/request': api.request.create,
-    'PUT /api/request/:request_id': api.request.update,
-    'DELETE /api/request/:request_id': api.request.close,
+    // 'GET /api/request/:request_id': api.request.get,
+    // 'POST /api/request': api.request.create,
+    // 'PUT /api/request/:request_id': api.request.update,
+    // 'DELETE /api/request/:request_id': api.request.close,
 
-    'GET /api/match/:match_id': api.match.get,
-    'POST /api/request/:request_id/match': api.match.create,
-    'PUT /api/match/:match_id': api.match.update,
-    'POST /api/match/:match_id/accept': api.match.accept,
-    'POST /api/match/:match_id/reject': api.match.reject,
+    // 'GET /api/match/:match_id': api.match.get,
+    // 'POST /api/request/:request_id/match': api.match.create,
+    // 'PUT /api/match/:match_id': api.match.update,
+    // 'POST /api/match/:match_id/accept': api.match.accept,
+    // 'POST /api/match/:match_id/reject': api.match.reject,
 }
 const METHODS = ['GET', 'POST', 'PUT', 'DELETE'];
 for (const [spec, handler] of Object.entries(API_PATHS)) {

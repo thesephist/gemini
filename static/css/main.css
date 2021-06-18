@@ -584,3 +584,19 @@ h2 {
     padding-right: 28px;
 }
 
+/* goodbye message */
+
+.goodbye {
+    background: var(--sb-light-primary);
+    padding: 1em;
+    border-radius: 6px;
+    font-size: 1.25em;
+    line-height: 1.5em;
+}
+
+.goodbye a {
+    white-space: nowrap;
+    color: var(--sb-dark-primary);
+    font-weight: bold;
+}
+
